@@ -1,14 +1,16 @@
 <template>
-  <div>vue2</div>
+  <div><Admin /></div>
 </template>
 
 <script>
+import Admin from "./views/Admin.vue";
+
 export default {
   name: "App",
   data() {
     return {};
   },
-  components: {},
+  components: { Admin },
   methods: {},
   mounted() {},
 };

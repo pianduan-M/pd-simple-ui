@@ -1,7 +1,6 @@
 import {
   createEventsObj,
   createElementByElType,
-  merge,
   formatRowDataByKey,
 } from "../../utils/index";
 import { isObject, isFunction, isArray, isString } from "../../utils/is";
@@ -36,7 +35,6 @@ export default {
   render(h) {
     // 合并默认配置
     let { commonColumnOptions, columns } = this.$props;
-    columns = columns.map((column) => merge(column, commonColumnOptions));
     const globleTableOptions = this.getGlobleTableOptions
       ? this.getGlobleTableOptions
       : {};
@@ -66,7 +64,12 @@ export default {
         default: ({ row }) => {
           let value = formatRowDataByKey(column.prop, row);
           value = value ? value : this.nullValueDefault;
-          return value;
+
+          if (column.formatter && isFunction(column.formatter)) {
+            value = column.formatter(value);
+          }
+
+          return value + (column.unit ? column.unit : "");
         },
       };
     };
@@ -75,7 +78,7 @@ export default {
     const createSlotElement = (item, row, column) => {
       if (typeof item === "string") return item;
 
-      const props = isFunction(props) ? item.props(row) : item.props;
+      const props = isFunction(item.props) ? item.props(row) : item.props;
       let children = "";
 
       // table-column 子元素
@@ -147,6 +150,7 @@ export default {
             if (column.type) {
               return h("el-table-column", {
                 props: {
+                  ...commonColumnOptions,
                   ...columnProps,
                   type: column.type,
                   label: column.label,
@@ -161,6 +165,7 @@ export default {
               return h("el-table-column", {
                 props: {
                   ...columnProps,
+                  ...commonColumnOptions,
                   prop: column.prop,
                   label: column.label,
                   width: column.width || "",

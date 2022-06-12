@@ -1,8 +1,7 @@
-import SearchForm from "./SearchForm.vue";
+import PdSearchForm from "./SearchForm.vue";
 
-
-SearchForm.install = function (app) {
-  app.component(SearchForm.name, SearchForm);
+PdSearchForm.install = function (Vue) {
+  Vue.component(PdSearchForm.name, PdSearchForm);
 };
 
-export default SearchForm
+export default PdSearchForm;

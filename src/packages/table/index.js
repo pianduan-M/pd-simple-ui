@@ -1,7 +1,7 @@
 import PdTable from "./table";
 
-PdTable.install = function (app) {
-  app.component(PdTable.name, PdTable);
+PdTable.install = function (Vue) {
+  Vue.component(PdTable.name, PdTable);
 };
 
 PdTable.setGlobalTableOptions = (globalTableOptions) => {

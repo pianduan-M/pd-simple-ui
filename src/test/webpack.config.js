@@ -1,10 +1,10 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const VueLoaderPlugin = require("vue-loader2/lib/plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
-  entry: path.resolve(__dirname, "./vue2/main.js"),
+  entry: path.resolve(__dirname, "./main.js"),
   mode: "development",
   devtool: "source-map",
   output: {
@@ -13,6 +13,9 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".vue"],
+    alias: {
+      "@": path.resolve(__dirname, "./"),
+    },
   },
   devServer: {
     static: "/dist",
@@ -25,27 +28,33 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: "vue-loader2",
+        loader: "vue-loader",
       },
       {
         test: /\.js$/,
         loader: "babel-loader",
       },
       {
-        test: /\.(scss|csss)$/,
-        use: ["style-loader", "css-loader", "scss-loader"],
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.(jpe?g|png|git|svg)$/,
-        type: "assets",
-        generator: {
-          filename: "img/[name]_[hash:8].[ext]",
-        },
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              // name: '[name].[ext]',
+              limit: 8192,
+              esModule: false,
+            },
           },
-        },
+        ],
+        type: "javascript/auto",
       },
     ],
   },

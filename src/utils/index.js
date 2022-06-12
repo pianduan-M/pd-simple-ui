@@ -76,8 +76,8 @@ export function formatRowDataByKey(key, row) {
 export function merge(target, source) {
   if (isObject(target) && isObject(source)) {
     Object.keys(source).map((sourceKey) => {
-      const targetVal = target[sourceKey];
-      const sourceVal = source[sourceKey];
+      let targetVal = target[sourceKey];
+      let sourceVal = source[sourceKey];
       // 如果没有
       if (!targetVal) {
         targetVal = sourceVal;
@@ -102,3 +102,21 @@ export const getSelectOptions = (column, map = {}) => {
 
   return options;
 };
+
+export function param2Obj(url) {
+  const search = decodeURIComponent(url.split("?")[1]).replace(/\+/g, " ");
+  if (!search) {
+    return {};
+  }
+  const obj = {};
+  const searchArr = search.split("&");
+  searchArr.forEach((v) => {
+    const index = v.indexOf("=");
+    if (index !== -1) {
+      const name = v.substring(0, index);
+      const val = v.substring(index + 1, v.length);
+      obj[name] = val;
+    }
+  });
+  return obj;
+}
