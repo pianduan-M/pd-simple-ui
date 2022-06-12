@@ -2,7 +2,7 @@
   "name": "pd-simple-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "dev": "webpack serve --config ./src/test/webpack.config.js",
     "build": "webpack --config ./build/webpack.config.build.js"
