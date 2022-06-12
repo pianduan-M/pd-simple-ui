@@ -1,7 +1,7 @@
 {
-  "name": "pd-simple-ui",
+  "name": "@pd-simple-ui/vue2",
   "version": "1.0.0",
-  "description": "",
+  "description": "基于 element-ui 封装的 table、form、search-form 组件 vue2 版本",
   "main": "./lib/index.js",
   "scripts": {
     "dev": "webpack serve --config ./src/test/webpack.config.js",

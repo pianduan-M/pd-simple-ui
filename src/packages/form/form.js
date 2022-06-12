@@ -57,14 +57,6 @@ export default {
         return {};
       },
     },
-    vertical: {
-      type: Boolean,
-      default: true,
-    },
-    horizontal: {
-      type: Boolean,
-      default: false,
-    },
     selectOptionMap: {
       type: Object,
       default() {
@@ -75,6 +67,9 @@ export default {
   methods: {
     validate() {
       return this.$refs.formRef.validate();
+    },
+    getFormRef() {
+      return this.$refs.formRef;
     },
   },
   watch: {
@@ -140,7 +135,6 @@ export default {
           item.type.indexOf("input") !== -1 ? "input" : "change";
         model = {
           [modelEventName]: (val) => {
-            console.log(val, modelEventName);
             const formData = { ...this.value };
             formData[item.prop] = val;
             this.$emit("input", formData);

@@ -28,7 +28,8 @@
             :class="[inputClass, item.class]"
             :value="value[item.prop]"
             v-if="item.type === 'select'"
-            @change="onInput(item.prop, $event)"
+            v-on="createFormItemEvents(item.on)"
+            @change="onInput(item.prop, $event, 'change', item)"
           >
             <el-option
               v-for="option in getSelectOptions(item)"
@@ -44,7 +45,8 @@
             :class="[inputClass, item.class]"
             :value="value[item.prop]"
             v-else-if="item.type === 'input'"
-            @input="onInput(item.prop, $event)"
+            v-on="createFormItemEvents(item.on)"
+            @input="onInput(item.prop, $event, 'input', item)"
           >
           </el-input>
           <slot v-else-if="item.slotName" :name="item.slotName"> </slot>
@@ -58,7 +60,8 @@
 </template>
 
 <script>
-import { isString, isArray } from "../../utils/is";
+import { isString, isArray, isObject } from "../../utils/is";
+import { createEventsObj } from "../../utils/index";
 
 export default {
   name: "PdSearchForm",
@@ -106,10 +109,13 @@ export default {
 
   components: {},
   methods: {
-    onInput(prop, value) {
+    onInput(prop, value, eventName, formItem) {
       const searchValue = { ...this.value };
       searchValue[prop] = value;
-      this.$emit("input", searchValue);
+      if (formItem.on[eventName]) {
+        formItem.on[eventName].call(this.$parent, value);
+      }
+      this.$emit(eventName, searchValue);
     },
     getSelectOptions(column) {
       let options = [];
@@ -118,8 +124,13 @@ export default {
       } else if (isString) {
         options = this.selectOptionMap[column.options] || [];
       }
-
       return options;
+    },
+    createFormItemEvents(events) {
+      if (events && isObject(events)) {
+        return createEventsObj.call(this.$parent, events);
+      }
+      return {};
     },
   },
   mounted() {},
