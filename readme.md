@@ -81,7 +81,7 @@
 | type         | el-form-item 下的表单元素名                                  | string          | el-input el-select 等 | —      |
 | options      | el-select 的 options 配置，当是 string 类型时，回到 selectOptionMap 中取值 | array string    | —                     | —      |
 | renderLabel  | el-form-item 中 label 值，如果该值是 string 时，将作为插槽名 | function string | —                     | —      |
-| ishidden     | 是否隐藏该项                                                 | boolean         | —                     | —      |
+| isHidden     | 是否隐藏该项                                                 | boolean         | —                     | —      |
 | layout       | 该项的 el-col props                                          | object          | —                     | —      |
 | itemAttrs    | el-form-item 的 props                                        | object          | —                     | —      |
 | rules        | 同 el-form-item                                              | object          | —                     | —      |

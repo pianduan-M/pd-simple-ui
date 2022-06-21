@@ -2,7 +2,6 @@
   <div class="search-form" :style="formStyle">
     <slot name="title"></slot>
     <div class="search-form__wrapper" :class="{ 'flex-wrap': flexWrap }">
-      <slot name="before"></slot>
       <div class="search-form-item" :class="formItemClass">
         <slot name="before"></slot>
       </div>
@@ -35,7 +34,7 @@
               v-for="option in getSelectOptions(item)"
               :value="option.value"
               :label="option.label"
-              :key="item.value"
+              :key="option.value"
             ></el-option>
           </el-select>
 
@@ -49,6 +48,16 @@
             @input="onInput(item.prop, $event, 'input', item)"
           >
           </el-input>
+          <el-date-picker
+            v-else-if="item.type === 'date'"
+            :size="size"
+            v-model="value[item.prop]"
+            type="date"
+            :class="[inputClass, item.class]"
+            v-bind="item.attrs"
+            v-on="createFormItemEvents(item.on)"
+          ></el-date-picker>
+
           <slot v-else-if="item.slotName" :name="item.slotName"> </slot>
         </div>
       </div>
