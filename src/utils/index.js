@@ -96,7 +96,7 @@ export const getSelectOptions = (column, map = {}) => {
   let options = [];
   if (isArray(column.options)) {
     options = column.options;
-  } else if (isString) {
+  } else if (isString(column.options)) {
     options = map[column.options] || [];
   }
 
