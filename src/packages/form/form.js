@@ -107,10 +107,10 @@ export default {
       if (item.slotName) {
         return createSlots(item.slotName);
       }
-      const props = item.inputOptions.props || {};
-      const events = item.inputOptions.on || {};
-      const style = item.inputOptions.style || {};
-      const className = item.inputOptions.class || {};
+      const props = item.inputOptions?.props || {};
+      const events = item.inputOptions?.on || {};
+      const style = item.inputOptions?.style || {};
+      const className = item.inputOptions?.class || {};
 
       // 如果是 select
       let children = "";
