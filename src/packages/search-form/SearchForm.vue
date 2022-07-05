@@ -57,7 +57,16 @@
             v-bind="item.attrs"
             v-on="createFormItemEvents(item.on)"
           ></el-date-picker>
-
+          <component
+            v-else-if="item.type"
+            :is="item.type"
+            v-bind="item.attrs"
+            v-model="value[item.prop]"
+            :class="[inputClass, item.class]"
+            :size="size"
+            v-on="createFormItemEvents(item.on)"
+            @input="onInput(item.prop, $event, 'input', item)"
+          ></component>
           <slot v-else-if="item.slotName" :name="item.slotName"> </slot>
         </div>
       </div>

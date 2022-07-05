@@ -50,7 +50,7 @@ export default {
         };
       }
       // 如果是插槽
-      if (column.slotName) {
+      else if (column.slotName) {
         const scopedSlot = this.$scopedSlots[column.slotName];
         if (scopedSlot) {
           return {
@@ -59,19 +59,20 @@ export default {
             },
           };
         }
+      } else {
+        return {
+          default: ({ row }) => {
+            let value = formatRowDataByKey(column.prop, row);
+            value = value ? value : this.nullValueDefault;
+
+            if (column.formatter && isFunction(column.formatter)) {
+              value = column.formatter(row);
+            }
+
+            return value + (column.unit ? column.unit : "");
+          },
+        };
       }
-      return {
-        default: ({ row }) => {
-          let value = formatRowDataByKey(column.prop, row);
-          value = value ? value : this.nullValueDefault;
-
-          if (column.formatter && isFunction(column.formatter)) {
-            value = column.formatter(value);
-          }
-
-          return value + (column.unit ? column.unit : "");
-        },
-      };
     };
 
     // 根据配置项生成元素工具函数
