@@ -51,7 +51,7 @@
           <el-date-picker
             v-else-if="item.type === 'date'"
             :size="size"
-            v-model="value[item.prop]"
+            :value="value[item.prop]"
             type="date"
             :class="[inputClass, item.class]"
             v-bind="item.attrs"
