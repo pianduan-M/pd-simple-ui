@@ -1,6 +1,6 @@
 {
   "name": "pd-simple-ui-vue2",
-  "version": "0.0.5-0",
+  "version": "0.0.5",
   "description": "基于 element-ui 封装的 table、form、search-form 组件 vue2 版本",
   "main": "./lib/index.js",
   "scripts": {

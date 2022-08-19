@@ -130,10 +130,10 @@ export default {
     onInput(prop, value, eventName, formItem) {
       const searchValue = { ...this.value };
       searchValue[prop] = value;
-      if (formItem.on[eventName]) {
+      if (formItem.on && formItem.on[eventName]) {
         formItem.on[eventName].call(this.$parent, value);
       }
-      this.$emit(eventName, searchValue);
+      this.$emit("input", searchValue);
     },
     getSelectOptions(column) {
       let options = [];
