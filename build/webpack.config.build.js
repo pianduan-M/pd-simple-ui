@@ -6,8 +6,8 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 module.exports = {
   mode: "none",
   entry: {
-    index: "./src/index.js",
-    "index.min": "./src/index.js",
+    index: "./packages/index.js",
+    "index.min": "./packages/index.js",
   },
   output: {
     path: path.resolve(__dirname, "../lib"),

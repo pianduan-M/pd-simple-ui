@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import { isString, isArray, isObject } from "../../utils/is";
-import { createEventsObj } from "../../utils/index";
+import { isString, isArray, isObject } from "../../src/utils/is";
+import { createEventsObj } from "../../src/utils/index";
 
 export default {
   name: "PdSearchForm",

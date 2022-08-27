@@ -24,9 +24,18 @@
       @selection-change="onSeletionChange"
       :data="tableData"
       :commonColumnOptions="{ align: 'center' }"
+      @sort-change="onSortChange"
     >
       <template #operate="{ row }">
         <el-button type="text" @click="handleEditorAdd(row)">编辑</el-button>
+      </template>
+
+      <template #province>
+        <span>省份1</span>
+      </template>
+
+      <template #provinceHeader>
+        <span>省份头部</span>
       </template>
     </PdTable>
 
@@ -122,7 +131,11 @@ export default {
         this.tableData = res.data.data || [];
       } catch (error) {}
     },
+    onSortChange(column, prop, order) {
+      console.log(column, prop, order);
+    },
   },
+
   mounted() {
     setTimeout(() => {
       this.selectOptionMap.gender = [

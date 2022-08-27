@@ -1,5 +1,5 @@
-import { isObject, isFunction, isString, isUndef } from "../../utils/is";
-import { createEventsObj, getSelectOptions } from "../../utils/index";
+import { isObject, isFunction, isString, isUndef } from "../../src/utils/is";
+import { createEventsObj, getSelectOptions } from "../../src/utils/index";
 
 export default {
   name: "PdForm",

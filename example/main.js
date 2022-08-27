@@ -5,10 +5,10 @@ import ElementUI from "element-ui";
 Vue.use(ElementUI);
 import "element-ui/lib/theme-chalk/index.css";
 
-import { mockXHR } from "../../mock";
+import { mockXHR } from "../mock";
 mockXHR();
 
-import PdSimpleUi from "../index";
+import PdSimpleUi from "../packages";
 Vue.use(PdSimpleUi);
 
 new Vue({

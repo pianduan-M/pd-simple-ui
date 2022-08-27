@@ -18,33 +18,13 @@
 
 | 参数      | 说明                                                         | 类型                         | 可选值 | 默认值 |
 | --------- | ------------------------------------------------------------ | ---------------------------- | ------ | ------ |
-| label     | 同 elment-ui 显示的标题                                      | string                       | —      | —      |
-| prop      | 同 elment-ui 对应列内容的字段名，也可以使用 property 属性，支持多级key | string                       | —      | —      |
-| width     | 同 elment-ui  列宽度，其他使用 props 传参                    | string                       | —      | —      |
 | style     | el-table-column 的样式配置                                   | object                       | —      | —      |
 | class     | el-table-column 的类名配置                                   | string object array          | —      | —      |
-| props     | el-table-column 的配置项 具体配置看 element-ui 官网          | object                       | —      | —      |
 | on        | el-table-column 的事件监听，具体事件查看官网，所有函数的 this 指向的该组件的父级，也就是说 this 指向的是当前使用 table 的组件，方便数据的使用 | object                       | —      | —      |
-| type      | 同 elment-ui                                                 | string                       | —      | —      |
-| slots     | 没列的 children 元素，根据配置 使用 h 函数创建元素，具体配置看下方 slots attributes，如果传入的值是一个函数，那么该函数接收 该列的行数据，返回的值将继续使用 h 函数创建元素 | function,object,array,string | —      | —      |
-| slotName  | 该列插槽名，可以在 table 中使用插槽 该插槽将作为该列最终展示的数据  跟 slots 同时传值时，slots 优先 | string                       | —      | —      |
+| slot      | 可以是 function 和 string 类型，function 类型直接调用传入当前行数据，返回值如果是字符串使用innerHTML，如果是对象类型，name 属性为 dom 或组件名称，其他属性参考 vue render 函数；string 类型使用插槽 | function,object,array,string | —      | —      |
+| children  | 嵌套 column 配置，用来设置多级表头                           | array                        | —      | —      |
 | formatter | 列数据的格式化函数，return 的值将作为该列显示的值            | function                     | —      | —      |
 | unit      | 如果传入该值将跟该列数据拼接，                               | string                       | —      | —      |
-
-##### Table column slots Attributes
-
-| 参数     | 说明                                                         | 类型                  | 可选值 | 默认值 |
-| -------- | ------------------------------------------------------------ | --------------------- | ------ | ------ |
-| elName   | 需要创建的 dom 名，也可以是已经全局注册过的自定义组件        | string                | —      | —      |
-| props    | 自定义组件的 props                                           | object                | —      | —      |
-| style    | dom 或自定义组件样式                                         | object                | —      | —      |
-| class    | dom 或自定义组件类名                                         | object，array         | —      | —      |
-| on       | dom 或自定义组件的事件监听，具体事件查看官网，所有函数的 this 指向的该组件的父级，也就是说 this 指向的是当前使用 table 的组件，方便数据的使用 | object                | —      | —      |
-| attrs    | dom 的 attributes                                            | object                | —      | —      |
-| children | 该 dom 或组件的 子元素，配置同该元素一样                     | object function array | —      | —      |
-| elType   | 指定特殊类型，根据特殊类型自动创建元素                       | string                | image  | —      |
-
-
 
 ## Form
 
