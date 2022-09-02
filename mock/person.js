@@ -11,6 +11,9 @@ let { personList } = Mock.mock({
       height: "@integer(150,200)",
       avatar: "@image('200x200')",
       "gender|1": ["man", "woman"],
+      networkTime: "@integer(10,100)",
+      homeTown: "@integer(1,2)",
+
     },
   ],
 });

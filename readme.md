@@ -16,15 +16,25 @@
 
 ##### Table column Attributes
 
-| 参数      | 说明                                                         | 类型                         | 可选值 | 默认值 |
-| --------- | ------------------------------------------------------------ | ---------------------------- | ------ | ------ |
-| style     | el-table-column 的样式配置                                   | object                       | —      | —      |
-| class     | el-table-column 的类名配置                                   | string object array          | —      | —      |
-| on        | el-table-column 的事件监听，具体事件查看官网，所有函数的 this 指向的该组件的父级，也就是说 this 指向的是当前使用 table 的组件，方便数据的使用 | object                       | —      | —      |
-| slot      | 可以是 function 和 string 类型，function 类型直接调用传入当前行数据，返回值如果是字符串使用innerHTML，如果是对象类型，name 属性为 dom 或组件名称，其他属性参考 vue render 函数；string 类型使用插槽 | function,object,array,string | —      | —      |
-| children  | 嵌套 column 配置，用来设置多级表头                           | array                        | —      | —      |
-| formatter | 列数据的格式化函数，return 的值将作为该列显示的值            | function                     | —      | —      |
-| unit      | 如果传入该值将跟该列数据拼接，                               | string                       | —      | —      |
+| 参数       | 说明                                                         | 类型                         | 可选值 | 默认值 |
+| ---------- | ------------------------------------------------------------ | ---------------------------- | ------ | ------ |
+| style      | el-table-column 的样式配置                                   | object                       | —      | —      |
+| class      | el-table-column 的类名配置                                   | string object array          | —      | —      |
+| on         | el-table-column 的事件监听，具体事件查看官网，所有函数的 this 指向的该组件的父级，也就是说 this 指向的是当前使用 table 的组件，方便数据的使用 | object                       | —      | —      |
+| slot       | 可以是 function 和 string 类型，function 类型直接调用 传参 ( h, row, column ) 可以返回 html 字符串，vNode, 带有 name 属性的配置对象，name 可以是组件名称，或者 vue 组件，其余属性会当做 h 函数的第二个参数；string 类型匹配插槽 | function,object,array,string | —      | —      |
+| children   | 嵌套 column 配置，用来设置多级表头                           | array                        | —      | —      |
+| formatter  | 列数据的格式化函数，return 的值将作为该列显示的值            | function                     | —      | —      |
+| unit       | 如果传入该值将跟该列数据拼接，                               | string                       | —      | —      |
+| columnType | 枚举类型，传入该字段会匹配一个 使用 use 方法注册的插件方法生成列数据 传入 （h, row, column）改方法的 this 指向 table 组件 | string                       | —      | —      |
+| enumList   | 枚举匹配数组，子项为 label,value 键值对，列项的值跟 value 匹配 | sting                        | —      | —      |
+
+#####  Table methods
+
+| 方法名 | 说明                                                         | 参数                  |
+| ------ | ------------------------------------------------------------ | --------------------- |
+| use    | 用于注册 columnType 枚举类型，第一个参数传入枚举类型名称，第二个注册函数需要返回一个 handler 方法，第三个为配置项 handler 可以访问，handler this 会被重新指向为 table， 传参 （h, row, column） 需要返回 vNode 类型 | name,install, options |
+
+
 
 ## Form
 

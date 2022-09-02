@@ -1,4 +1,6 @@
 import { isObject, isArray, isString } from "./is";
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
 
 export function createEventsObj(eventObj = {}, row) {
   if (!eventObj) return {};
@@ -48,7 +50,7 @@ function handleFormatter(formatter, rowData) {
 
 export function formatRowDataByKey(key, row) {
   if (typeof key !== "string") {
-    throw new TypeError("key is not string");
+    throw new TypeError("column prop must be a string");
   }
 
   function hander(keys, row) {
@@ -120,3 +122,11 @@ export function param2Obj(url) {
   });
   return obj;
 }
+
+
+
+export function noop() { };
+
+export function hasOwn(obj, key) {
+  return hasOwnProperty.call(obj, key);
+};

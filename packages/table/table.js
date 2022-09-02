@@ -1,7 +1,6 @@
 
 import { createTableColumn } from './table-create'
 
-
 export default {
   name: "PdTable",
   props: {
@@ -46,3 +45,4 @@ export default {
     );
   },
 };
+

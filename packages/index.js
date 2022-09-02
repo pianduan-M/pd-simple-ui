@@ -1,6 +1,7 @@
 import PdForm from "./form";
 import PdTable from "./table";
 import PdSearchForm from "./search-form";
+import { pdTableEnumColumnTypePlugin } from './table/column-type'
 
 const components = [PdForm, PdTable, PdSearchForm];
 
@@ -15,4 +16,5 @@ export default {
   PdForm,
   PdTable,
   PdSearchForm,
+  pdTableEnumColumnTypePlugin
 };

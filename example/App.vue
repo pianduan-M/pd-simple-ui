@@ -16,4 +16,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.danger-color {
+  color: red;
+}
+
+.waring-color {
+  color: yellow;
+}
+</style>

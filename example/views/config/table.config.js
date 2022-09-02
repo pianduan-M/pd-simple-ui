@@ -1,3 +1,6 @@
+
+import TableImage from '../../components/TableImage.vue'
+
 const genders = {
   man: "男",
   woman: "女",
@@ -13,8 +16,8 @@ export const tableColumns = [
     },
   },
   { label: "时间", prop: "createTime", fixed: 'left' },
-  { label: "名字", prop: "name" },
-  { label: "年龄", prop: "age", sortable: 'custom' },
+  { label: "名字", prop: "name", fixed: 'left' },
+  { label: "年龄", prop: "age", sortable: 'custom', fixed: 'left' },
   {
     label: "性别",
     prop: "gender",
@@ -51,26 +54,28 @@ export const tableColumns = [
   },
   {
     label: "全身照",
+    prop: 'avatar',
     slot(row) {
       return {
-        name: "ElPopover",
-        props: {
-          trigger: 'hover',
-
-        },
-        scopedSlots(h) {
-          return {
-            reference() {
-              return h('img', { attrs: { src: row.avatar, style: "width:100px;height:100px" } })
-            },
-            default() {
-              return h('img', { attrs: { src: row.avatar, style: "width:500px;height:500px" } })
-            }
-          }
-        },
-
+        name: TableImage,
       }
     }
+  },
+  {
+    label: "籍贯",
+    columnType: "homeTownEnum",
+    prop: "homeTown",
+    enumList: [
+      {
+        label: "江西",
+        value: 1
+      },
+      {
+        label: "广东",
+        value: 2
+      }
+    ]
+
   },
   {
     label: "操作",

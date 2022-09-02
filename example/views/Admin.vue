@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 1000px">
     <PdSearchForm
       :gutter="20"
       label-suffix=":"
@@ -19,6 +19,7 @@
     <br />
 
     <PdTable
+      style="width: 100%"
       :columns="tableColumns"
       border
       @selection-change="onSeletionChange"
