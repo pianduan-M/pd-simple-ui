@@ -28,6 +28,7 @@ export const tableColumns = [
   {
     label: "地址",
     align: "center",
+    renderHeader: () => `地址（custom）`,
     children: [
       {
         label: "省份",
@@ -63,7 +64,7 @@ export const tableColumns = [
   },
   {
     label: "籍贯",
-    columnType: "homeTownEnum",
+    type: "enumType",
     prop: "homeTown",
     enumList: [
       {

@@ -1,3 +1,7 @@
+import ProfessionSelect from "../../components/ProfessionSelect.vue";
+
+
+
 export const formItems = [
   {
     prop: "name",
@@ -49,14 +53,24 @@ export const formItems = [
 
 export const searchFormItems = [
   {
+    label: "日期", prop: "date", type: "year", placeholder: "请选择时间",
+  },
+  {
     label: "姓名",
     prop: "name",
     type: "input",
+    placeholder: "请选择时间",
   },
   {
     label: "年龄",
     prop: "age",
     type: "input",
+  },
+  {
+    label: "职业",
+    prop: "profession",
+    type: ProfessionSelect,
+    placeholder: "请选择职业",
   },
   {
     label: "性别",

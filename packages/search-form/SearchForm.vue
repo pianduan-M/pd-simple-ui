@@ -23,12 +23,13 @@
         <div class="form-item__content">
           <el-select
             :size="size"
-            v-bind="item.attrs"
+            v-bind="getItemProps(item)"
             :class="[inputClass, item.class]"
             :value="value[item.prop]"
             v-if="item.type === 'select'"
             v-on="createFormItemEvents(item.on)"
             @change="onInput(item.prop, $event, 'change', item)"
+            style="width: 100%"
           >
             <el-option
               v-for="option in getSelectOptions(item)"
@@ -40,32 +41,36 @@
 
           <el-input
             :size="size"
-            v-bind="item.attrs"
+            v-bind="getItemProps(item)"
             :class="[inputClass, item.class]"
             :value="value[item.prop]"
             v-else-if="item.type === 'input'"
             v-on="createFormItemEvents(item.on)"
             @input="onInput(item.prop, $event, 'input', item)"
+            style="width: 100%"
           >
           </el-input>
           <el-date-picker
-            v-else-if="item.type === 'date'"
+            v-else-if="isDateType(item.type)"
+            v-bind="getItemProps(item)"
             :size="size"
             :value="value[item.prop]"
-            type="date"
+            :type="item.type"
             :class="[inputClass, item.class]"
-            v-bind="item.attrs"
             v-on="createFormItemEvents(item.on)"
+            @input="onInput(item.prop, $event, 'change', item)"
+            style="width: 100%"
           ></el-date-picker>
           <component
             v-else-if="item.type"
             :is="item.type"
-            v-bind="item.attrs"
+            v-bind="getItemProps(item)"
             v-model="value[item.prop]"
             :class="[inputClass, item.class]"
             :size="size"
             v-on="createFormItemEvents(item.on)"
             @input="onInput(item.prop, $event, 'input', item)"
+            style="width: 100%"
           ></component>
           <slot v-else-if="item.slotName" :name="item.slotName"> </slot>
         </div>
@@ -80,6 +85,7 @@
 <script>
 import { isString, isArray, isObject } from "../../src/utils/is";
 import { createEventsObj } from "../../src/utils/index";
+import defaultProps, { dateTypes } from "./default-props";
 
 export default {
   name: "PdSearchForm",
@@ -124,7 +130,6 @@ export default {
       },
     },
   },
-
   components: {},
   methods: {
     onInput(prop, value, eventName, formItem) {
@@ -150,8 +155,36 @@ export default {
       }
       return {};
     },
+    getItemProps(item = {}) {
+      let result = {};
+      const {
+        type,
+        label,
+        prop,
+        class: className,
+        on,
+        slotName,
+        labelSlotName,
+        ...rest
+      } = item;
+      switch (true) {
+        case this.isDateType(type):
+          result = { ...this.defaultProps.date, ...rest };
+          break;
+
+        default:
+          result = { ...rest };
+          break;
+      }
+      return result;
+    },
+    isDateType(type) {
+      return dateTypes.includes(type);
+    },
   },
-  mounted() {},
+  created() {
+    this.defaultProps = defaultProps;
+  },
   computed: {
     formStyle() {
       if (this.gutter > 0) {
@@ -201,9 +234,10 @@ export default {
     align-items: center;
   }
 
-  &__label {
+  .form-item__label {
     font-size: 14px;
     font-weight: 400;
+    white-space: nowrap;
   }
 
   .label-suffix {

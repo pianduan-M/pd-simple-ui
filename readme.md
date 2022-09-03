@@ -116,10 +116,9 @@
 | label         | 表单 label                                                   | string       | —            | —      |
 | labelSlotName | 表单 label 插槽名                                            | string       | —            | —      |
 | prop          | 表单域字段                                                   | string       | —            | —      |
-| type          | 表单项下的表单元素类型,element-ui 元素                       | string       | input,select | —      |
+| type          | 表单项下的表单元素类型,element-ui 元素，也可以是全局注册过的组件名或者直接传递一个vue组件 | string       | input,select | —      |
 | options       | el-select 的 options 配置，当是 string 类型时，回到 selectOptionMap 中取值 | array string | —            | —      |
 | on            | 表单项下的表单元素事件监听                                   | object       | —            | —      |
-| attrs         | 表单元素 props                                               | object       | —            | —      |
 | class         | 表单元素类名                                                 | object array | —            | —      |
 | slotName      | 表单元素插槽名                                               | string       | —            | —      |
 

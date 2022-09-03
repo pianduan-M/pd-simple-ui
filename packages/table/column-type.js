@@ -7,22 +7,36 @@ import {
 // 储存 column type
 export const columnTypeList = {}
 
-export function use(name, fn, options) {
-  const handler = fn(options)
+// 储存注册的 plugin
+export const tablePluginList = []
+
+export function use(fn, options = {}) {
+  if (!isFunction(fn)) {
+    throw new TypeError("table use plugin install must a function")
+  }
+
+  tablePluginList.push(function () {
+    fn.call(this, options)
+  })
+}
+
+// 注册表格列类型
+export function registerColumnType(columnTypeName, handler) {
   if (!handler && !isFunction(handler)) {
     throw new Error('register table column type must a function')
   }
 
-  if (!name) {
+  if (!columnTypeName) {
     throw new Error('table column type name is required')
   }
-
-  columnTypeList[name] = handler
+  console.log(columnTypeName, handler, 'columnTypeName, handler');
+  columnTypeList[columnTypeName] = handler
 
 }
 
+// 枚举类型
 export function pdTableEnumColumnTypePlugin(options) {
-  return function (h, row, column) {
+  function enumType(h, row, column) {
     let result = this.nullValueDefault
     const { prop, enumList, } = column
     const { getDomClassName } = options
@@ -47,4 +61,15 @@ export function pdTableEnumColumnTypePlugin(options) {
 
     return result
   }
+
+  this.registerColumnType('enumType', enumType)
+}
+
+
+// element native column type
+export const nativeColumnType = ['selection', 'index', 'expand']
+
+// decide native column type
+export const isNativeColumnType = (type) => {
+  return nativeColumnType.includes(type)
 }

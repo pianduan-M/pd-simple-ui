@@ -1,5 +1,8 @@
 
 import { createTableColumn } from './table-create'
+import { registerColumnType, tablePluginList } from './column-type'
+import { eventBus } from '../../src/utils/event-bus';
+
 
 export default {
   name: "PdTable",
@@ -24,6 +27,15 @@ export default {
     return {
       globalTableOptions: {},
     };
+  },
+  beforeCreate() {
+    // event bus
+    this.eventBus = new eventBus()
+
+    // 列类型注册函数
+    this.registerColumnType = registerColumnType
+    // 注册插件
+    tablePluginList.map(execute => execute.call(this))
   },
   components: {},
   methods: {},

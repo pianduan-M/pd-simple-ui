@@ -9,7 +9,7 @@ Vue.use(ElementUI);
 
 mockXHR();
 
-PdSimpleUi.PdTable.use('homeTownEnum', PdSimpleUi.pdTableEnumColumnTypePlugin, {
+PdSimpleUi.PdTable.use(PdSimpleUi.pdTableEnumColumnTypePlugin, {
   getDomClassName(value) {
     let result = ''
     switch (value) {

@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 1000px">
+  <div style="width: 1600px">
     <PdSearchForm
       :gutter="20"
       label-suffix=":"
@@ -9,7 +9,9 @@
       :selectOptionMap="selectOptionMap"
     >
       <template #after>
-        <el-button size="small" type="primary">搜索</el-button>
+        <el-button size="small" type="primary" @click="onSearch"
+          >搜索</el-button
+        >
         <el-button size="small" type="primary" @click="handleEditorAdd({})"
           >新增</el-button
         >
@@ -134,6 +136,9 @@ export default {
     },
     onSortChange(column, prop, order) {
       console.log(column, prop, order);
+    },
+    onSearch() {
+      console.log(this.searchValue, "searchValue");
     },
   },
 
