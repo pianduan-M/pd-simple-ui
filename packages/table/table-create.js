@@ -12,8 +12,6 @@ export function createTableColumn(h, columns, commonColumnOptions) {
   // 创建前调用
   columns = this.eventBus.emit('on-before', columns)
 
-  console.log(columns, 'columns');
-
   if (!columns) {
     throw new Error(`event on-before  result columns null`)
   }

@@ -16,17 +16,17 @@
 
 ##### Table column Attributes
 
-| 参数      | 说明                                                         | 类型                         | 可选值 | 默认值 |
-| --------- | ------------------------------------------------------------ | ---------------------------- | ------ | ------ |
-| style     | el-table-column 的样式配置                                   | object                       | —      | —      |
-| class     | el-table-column 的类名配置                                   | string object array          | —      | —      |
-| on        | el-table-column 的事件监听，具体事件查看官网，所有函数的 this 指向的该组件的父级，也就是说 this 指向的是当前使用 table 的组件，方便数据的使用 | object                       | —      | —      |
-| slot      | 可以是 function 和 string 类型，function 类型直接调用 传参 ( h, row, column ) 可以返回 html 字符串，vNode, 带有 name 属性的配置对象，name 可以是组件名称，或者 vue 组件，其余属性会当做 h 函数的第二个参数；string 类型匹配插槽 | function,object,array,string | —      | —      |
-| children  | 嵌套 column 配置，用来设置多级表头                           | array                        | —      | —      |
-| formatter | 列数据的格式化函数，return 的值将作为该列显示的值            | function                     | —      | —      |
-| unit      | 如果传入该值将跟该列数据拼接，                               | string                       | —      | —      |
-| type      | 除了 el-table 中 “selection/index/expand” 类型还可以是自己注册过枚举类型，传入该字段会匹配一个 使用 use 方法注册的插件方法生成列数据 传入 （h, row, column）改方法的 this 指向 table 组件 | string                       | —      | —      |
-| enumList  | 枚举匹配数组，子项为 label,value 键值对，列项的值跟 value 匹配 | sting                        | —      | —      |
+| 参数      | 说明                                                         | 类型                   | 可选值 | 默认值 |
+| --------- | ------------------------------------------------------------ | ---------------------- | ------ | ------ |
+| style     | el-table-column 的样式配置                                   | object                 | —      | —      |
+| class     | el-table-column 的类名配置                                   | string object array    | —      | —      |
+| on        | el-table-column 的事件监听，具体事件查看官网，所有函数的 this 指向的该组件的父级，也就是说 this 指向的是当前使用 table 的组件，方便数据的使用 | object                 | —      | —      |
+| slot      | 可以是 function 和 string 类型，function 类型直接调用 传参 ( h, row, column ) 可以返回 html 字符串，vNode, 带有 name 属性的配置对象，name 可以是组件名称，或者 vue 组件，其余属性会当做 h 函数的第二个参数；string 类型匹配插槽，可以是一个对象传多个插槽名（default,header） | function,object,string | —      | —      |
+| children  | 嵌套 column 配置，用来设置多级表头                           | array                  | —      | —      |
+| formatter | 列数据的格式化函数，return 的值将作为该列显示的值            | function               | —      | —      |
+| unit      | 如果传入该值将跟该列数据拼接，                               | string                 | —      | —      |
+| type      | 除了 el-table 中 “selection/index/expand” 类型还可以是自己注册过枚举类型，传入该字段会匹配一个 使用 use 方法注册的插件方法生成列数据 传入 （h, row, column）改方法的 this 指向 table 组件 | string                 | —      | —      |
+| enumList  | 枚举匹配数组，子项为 label,value 键值对，列项的值跟 value 匹配 | sting                  | —      | —      |
 
 #####  Table methods
 
@@ -40,16 +40,17 @@
 
 ##### Form Attributes
 
-| 参数              | 说明                                                         | 类型   | 可选值 | 默认值 |
-| ----------------- | ------------------------------------------------------------ | ------ | ------ | ------ |
-| v-model/value     | 双向绑定的表单数据, 同 el-form 的 model                      | object | —      | —      |
-| initFormData      | 表单默认值，                                                 | object | —      | —      |
-| formItems         | 表单 item 配置项，具体配置看下方 form-item attributes        | array  | —      | —      |
-| colLayout         | el-form-item 的布局配置，具体配置查看 el-col                 | object | —      | —      |
-| formItemAttrs     | el-form-item 的公共 props ，会被 formItems 中的配置覆盖      | object | —      | —      |
-| rowAttrs          | el-row 的 props                                              | object | —      | —      |
-| defaultInputAttrs | el-form-item 下的 所有input select 等表单元素的公共 props    | object | —      | —      |
-| selectOptionMap   | el-select 的 options 配置 通过formItem 传入相应 key 取值，通常是当 select 的值是异步获取时使用， | object | —      | —      |
+| 参数              | 说明                                                         | 类型    | 可选值 | 默认值 |
+| ----------------- | ------------------------------------------------------------ | ------- | ------ | ------ |
+| v-model/value     | 双向绑定的表单数据, 同 el-form 的 model                      | object  | —      | —      |
+| initFormData      | 表单默认值，                                                 | object  | —      | —      |
+| formItems         | 表单 item 配置项，具体配置看下方 form-item attributes        | array   | —      | —      |
+| colLayout         | el-form-item 的布局配置，具体配置查看 el-col                 | object  | —      | —      |
+| formItemAttrs     | el-form-item 的公共 props ，会被 formItems 中的配置覆盖      | object  | —      | —      |
+| rowAttrs          | el-row 的 props                                              | object  | —      | —      |
+| defaultInputAttrs | el-form-item 下的 所有input select 等表单元素的公共配置项    | object  | —      | —      |
+| selectOptionMap   | el-select 的 options 配置 通过formItem 传入相应 key 取值，通常是当 select 的值是异步获取时使用， | object  | —      | —      |
+| autoClearValidate | 自动清除表单校验，需要祖先组件提供 “dialogVisible” provide 必须是一个函数，监听 dialogVisible 为 false 时调用 clearValidate | Boolean | —      | true   |
 
 **其余 attrs 都会当作 props 传给 el-form**
 
@@ -107,8 +108,6 @@
 | flexWrap        | 宽度超出是否换行                                             | boolean      | —             | false  |
 | selectOptionMap | el-select 的 options 配置 通过formItem 传入相应 key 取值，通常是当 select 的值是异步获取时使用， | object       | —             | —      |
 
-
-
 ##### Search-form Item Attributes
 
 | 参数          | 说明                                                         | 类型         | 可选值       | 默认值 |
@@ -121,6 +120,10 @@
 | on            | 表单项下的表单元素事件监听                                   | object       | —            | —      |
 | class         | 表单元素类名                                                 | object array | —            | —      |
 | slotName      | 表单元素插槽名                                               | string       | —            | —      |
+
+**其余配置全部传给表单元素
+
+
 
 ##### Search-form slot 插槽
 
