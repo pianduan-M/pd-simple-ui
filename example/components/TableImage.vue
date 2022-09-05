@@ -20,7 +20,6 @@ export default {
   components: {},
   methods: {},
   mounted() {
-    console.log(this.row, this.prop);
   },
   computed: {},
 };

@@ -7,38 +7,49 @@ import {
 } from "../../src/utils/index";
 
 // 创建表格列
-export async function createTableColumn(h, columns, commonColumnOptions) {
+export function createTableColumn(h, columns, commonColumnOptions) {
+
   // 创建前调用
-  columns = await this.eventBus.emit('on-before', columns)
+  columns = this.eventBus.emit('on-before', columns)
+
+  console.log(columns, 'columns');
 
   if (!columns) {
     throw new Error(`event on-before  result columns null`)
   }
 
   if (columns instanceof Array) {
-    return columns.map(async (column) => {
-      const { on = {}, class: className = {}, style = {}, children, formatter, enumList, slot, unit, ...props } = column
+    return columns.map((column) => {
+      let { on = {}, class: className = {}, style = {}, children, formatter, enumList, slot, unit, ...props } = column
       if (children && Array.isArray(children)) {
 
         //  创建 children 前调用
-        hooksResult = await this.eventBus.emit('on-before-create-children', { children, column })
+        const hooksResult = this.eventBus.emit('on-before-create-children', { children, column })
         children = hooksResult.children
 
         if (!children) {
           throw new Error(`event on-before-create-children  result children null`)
         }
 
+        const recursionChildren = createTableColumn.call(this, h, children, commonColumnOptions)
+
         return h("el-table-column", {
           props: { ...commonColumnOptions, ...props },
           on, class: className, style,
-        }, createTableColumn.call(this, h, children, commonColumnOptions))
+        }, recursionChildren)
       } else {
+        let scopedSlots = {}
+
+        if (!isNativeColumnType(column.type)) {
+          scopedSlots = createScopedSlots.call(this, column, h)
+        }
+
         return h("el-table-column", {
           props: { ...commonColumnOptions, ...props },
           on,
           class: className,
           style,
-          scopedSlots: isNativeColumnType(column.type) ? {} : createScopedSlots.call(this, column, h),
+          scopedSlots: scopedSlots,
         })
       }
     });
@@ -47,10 +58,10 @@ export async function createTableColumn(h, columns, commonColumnOptions) {
 };
 
 // 创建作用域插槽
-async function createScopedSlots(column, h) {
+function createScopedSlots(column, h) {
 
   // 创建插槽内容前调用
-  const resultResult = await this.eventBus.emit('on-before-create-column-slot', column)
+  const resultResult = this.eventBus.emit('on-before-create-column-slot', column)
 
   if (!resultResult) {
     throw new Error(`event on-before-create-column-slot  result column null`)

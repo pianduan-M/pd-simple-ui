@@ -29,7 +29,6 @@ export function registerColumnType(columnTypeName, handler) {
   if (!columnTypeName) {
     throw new Error('table column type name is required')
   }
-  console.log(columnTypeName, handler, 'columnTypeName, handler');
   columnTypeList[columnTypeName] = handler
 
 }
@@ -40,7 +39,6 @@ export function pdTableEnumColumnTypePlugin(options) {
     let result = this.nullValueDefault
     const { prop, enumList, } = column
     const { getDomClassName } = options
-    console.log(options, 'options');
     let value = formatRowDataByKey(prop, row);
 
     if (isArray(enumList)) {

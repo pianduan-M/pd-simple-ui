@@ -41,11 +41,15 @@ export default {
   methods: {},
   mounted() { },
   render(h) {
+    let { commonColumnOptions, columns } = this
+
     // 合并默认配置
-    let { commonColumnOptions, columns } = this.$props;
     const globalTableOptions = this.globalTableOptions
       ? this.globalTableOptions
       : {};
+
+
+    let tableColumn = createTableColumn.call(this, h, columns, commonColumnOptions)
 
     return h(
       "el-table",
@@ -53,7 +57,7 @@ export default {
         props: { ...globalTableOptions, ...this.$attrs },
         on: this.$listeners,
       },
-      createTableColumn.call(this, h, columns, commonColumnOptions)
+      tableColumn
     );
   },
 };

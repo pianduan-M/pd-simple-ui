@@ -13,6 +13,8 @@ export const formItems = [
     label: "年龄",
     renderLabel: "ageLabel",
     type: "el-input",
+    contentDesc: "年龄",
+    inputOptions: { style: { width: '100px' } }
   },
   {
     prop: "gender",
@@ -65,6 +67,7 @@ export const searchFormItems = [
     label: "年龄",
     prop: "age",
     type: "input",
+    placeholder: "请输入年龄",
   },
   {
     label: "职业",

@@ -80,6 +80,12 @@ import axios from "axios";
 
 export default {
   name: "user",
+
+  provide() {
+    return {
+      dialogVisible: () => this.visible,
+    };
+  },
   data() {
     this.tableColumns = tableColumns;
     this.formItems = formItems;
@@ -117,9 +123,7 @@ export default {
   },
 
   methods: {
-    onSeletionChange() {
-      // console.log("onSeletionChange");
-    },
+    onSeletionChange() {},
     resetForm() {
       this.initFormData = {};
     },
@@ -130,7 +134,6 @@ export default {
     async getPersonList() {
       try {
         const res = await axios.get("/api/person/list");
-        console.log(res, "res");
         this.tableData = res.data.data || [];
       } catch (error) {}
     },

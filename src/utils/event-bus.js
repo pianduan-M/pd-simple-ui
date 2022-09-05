@@ -17,12 +17,12 @@ export class eventBus {
     }
   }
 
-  async emit(eventName, ...payload) {
+  emit(eventName, payload) {
     const callbacks = this.eventList[eventName]
     if (callbacks) {
       callbacks.forEach(async (callback) => {
         try {
-          payload = await callback(payload)
+          payload = callback(payload)
         } catch (error) {
           throw new Error(`eventBus ${eventName} ${error}`)
         }
