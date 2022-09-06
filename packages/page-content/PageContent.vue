@@ -8,50 +8,73 @@
         input-class="search-input"
         v-model="searchValue"
         :selectOptionMap="selectOptionMap"
+        :size="size"
       >
         <!-- 透传 slot 给search-form -->
         <template v-for="slot in getSearchFormItemSlotName()" #[slot]="data">
-          <slot name="slot" v-bind="data" />
+          <slot :name="slot" v-bind="data" />
         </template>
 
-        <!-- 定义search form 后面的操作按钮 -->
+        <!-- 定义search form 操作按钮 -->
         <template #after>
-          <component
+          <el-button
             v-for="item in searchBtnList"
-            :is="getSearchBtnComponent(item.key)"
             @click="getSearchBtnListeners(item)"
             :key="item.key"
             :size="size"
             :type="getSearchBtnType(item)"
-          />
+            >{{ item.name }}</el-button
+          >
           <slot name="search-btn"></slot>
         </template>
       </PdSearchForm>
 
       <!-- 右侧查看更多按钮 -->
-      <div class="show-more-btn">
+      <div class="show-more-btn" v-if="showMoreBtn">
         <slot name="more-btn">
-          <el-link type="primary"></el-link>
+          <el-link type="primary">查看更多 </el-link>
         </slot>
       </div>
     </div>
 
     <br />
+    <div>
+      <div>
+        <!-- 过滤表格列 -->
+        <FilterColumn
+          :columns="tableColumns"
+          :showColumnList.sync="selectList"
+        />
+      </div>
 
-    <PdTable
-      style="width: 100%"
-      :data="tableData"
-      :columns="tableColumns"
-      border
-      :commonColumnOptions="{ align: 'center' }"
-      v-bind="this.$listeners"
-    >
-    <!-- 透传 slot 给 table 组件 -->
-      <template v-for="slot in getSearchFormItemSlotName()" #[slot]="data">
-        <slot name="slot" v-bind="data" />
-      </template>
-    </PdTable>
+      <PdTable
+        style="width: 100%"
+        :data="tableData"
+        border
+        :columns="filterTableColumns"
+      >
+        <!-- 透传 slot 给 table 组件 -->
+        <template v-for="slot in getTableSlotName(tableColumns)" #[slot]="data">
+          <slot :name="slot" v-bind="data" />
+        </template>
+      </PdTable>
 
+      <!-- 页码 -->
+      <div>
+        <el-pagination
+          v-bind="paginationOptions"
+          :total="pageValue[pageMapKeys.total]"
+          :page-size="pageValue[pageMapKeys.size]"
+          :current-page="pageValue[pageMapKeys.page]"
+          @size-change="onSizeChange"
+          @current-change="onCurrentPageChange"
+          @prev-click="onCurrentPageChange"
+          @next-click="onCurrentPageChange"
+        >
+        </el-pagination>
+      </div>
+    </div>
+    <!--
     <el-dialog :visible="visible">
       <PdForm
         :formItems="formItems"
@@ -79,26 +102,22 @@
           <el-button size="small" @click="visible = false">取消</el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
-import { tableColumns } from "./config/table.config";
-import { formItems, searchFormItems } from "./config/form.config";
-import axios from "axios";
 import { pageContentProps } from "./page-content-props";
-import search from "./search-mixin.js";
+import FilterColumn from "./FilterColumn.vue";
+import searchMixin from "./search-mixin.js";
+import tableMixin from "./table.mixin.js";
+import paginationMixin from "./pagination-mixin.js";
 
 export default {
-  mixins: [search],
-  name: "pageContent",
+  mixins: [searchMixin, tableMixin, paginationMixin],
+  name: "PageContent",
   data() {
-    this.tableColumns = tableColumns;
-    this.formItems = formItems;
-    this.searchFormItems = searchFormItems;
     return {
-      tableData: [],
       formData: {
         name: "",
         age: "",
@@ -118,63 +137,18 @@ export default {
           },
         ],
       },
-      searchValue: {
-        name: "",
-        age: "",
-      },
-      selectOptionMap: {
-        gender: [],
-      },
+
       visible: false,
     };
   },
   props: {
     ...pageContentProps,
   },
-  methods: {
-    onSeletionChange() {},
-    resetForm() {
-      this.initFormData = {};
-    },
-    handleEditorAdd(row) {
-      this.initFormData = row;
-      this.visible = true;
-    },
-    async getPersonList() {
-      try {
-        const res = await axios.get("/api/person/list");
-        this.tableData = res.data.data || [];
-      } catch (error) {}
-    },
-    onSortChange(column, prop, order) {
-      console.log(column, prop, order);
-    },
-    onSearch() {
-      console.log(this.searchValue, "searchValue");
-    },
-  },
+  components: { FilterColumn },
+  methods: {},
 
-  mounted() {
-    setTimeout(() => {
-      this.selectOptionMap.gender = [
-        {
-          label: "男",
-          value: "man",
-        },
-        {
-          label: "女",
-          value: "woman",
-        },
-      ];
-    }, 2000);
-
-    this.getPersonList();
-  },
-  watch: {
-    searchValue(newVal) {
-      console.log(newVal);
-    },
-  },
+  mounted() {},
+  watch: {},
 };
 </script>
 

@@ -41,13 +41,13 @@ export default {
   methods: {},
   mounted() { },
   render(h) {
+
     let { commonColumnOptions, columns } = this
 
     // 合并默认配置
     const globalTableOptions = this.globalTableOptions
       ? this.globalTableOptions
       : {};
-
 
     let tableColumn = createTableColumn.call(this, h, columns, commonColumnOptions)
 
@@ -59,6 +59,7 @@ export default {
       },
       tableColumn
     );
+
   },
 };
 

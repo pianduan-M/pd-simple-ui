@@ -19,6 +19,7 @@ export function createTableColumn(h, columns, commonColumnOptions) {
   if (columns instanceof Array) {
     return columns.map((column) => {
       let { on = {}, class: className = {}, style = {}, children, formatter, enumList, slot, unit, ...props } = column
+
       if (children && Array.isArray(children)) {
 
         //  创建 children 前调用
@@ -87,7 +88,7 @@ function createScopedSlots(column, h) {
           resultSlots[key] = createSlotByStringType.call(this, h, value)
         }
       })
-
+      console.log(resultSlots, 'resultSlots');
       return resultSlots
     // 如果是 字符串类型 就当做是插槽名使用作用域插槽
     case isString(column.slot):
@@ -129,7 +130,7 @@ function createSlotByStringType(h, slot, column) {
       return scopedSlot(props);
     }
   } else {
-    return createDefaultSlot.call(this, h, column)
+    return () => this.nullValueDefault
   }
 }
 

@@ -1,8 +1,24 @@
 
 
 export default {
+  data() {
+    return {
+      searchValue: {}
+    }
+  },
+  created() {
+    // 绑定响应式 赋默认值
+    const searchFormParams = this.searchFormParams
+    this.searchFormItems.forEach(item => {
+      const prop = item.prop
+      const value = searchFormParams[prop] || ''
+      this.$set(this.searchValue, prop, value)
+    })
+  },
   methods: {
-    getSearchBtnComponent(key) {
+    getSearchBtnComponent(item) {
+      console.log(item, 'getSearchBtnComponent');
+      const key = item.key
       switch (key) {
         case 'search':
         case 'add':
@@ -25,20 +41,21 @@ export default {
         case 'delete':
           return 'danger'
         default:
-          return key
+          return ''
       }
 
     },
     getSearchBtnListeners(item) {
+
       switch (item.key) {
         case 'search':
-          return this.onSearch
+          return this.onSearch(item)
         case 'add':
-          return this.handleAdd
+          return this.handleAdd(item)
         case 'edit':
-          return this.handleEdit
+          return this.handleEdit(item)
         case 'delete':
-          return this.handleDelete
+          return this.handleDelete(item)
         default:
           return () => { }
       }
@@ -55,6 +72,25 @@ export default {
         }
       })
       return result
+    },
+    onSearch() {
+      this.pageValue[this.pageMapKeys.page] = 1
+      this.getTableDataList()
+    },
+    handleAdd() {
+
+    },
+    handleEdit() {
+
+    },
+    handleDelete() {
+
+    },
+    getRequestParams() {
+      const pageValue = { ...this.pageValue }
+      delete pageValue[this.pageMapKeys.total]
+      return { ...pageValue, ...this.searchValue }
     }
-  }
+  },
+
 }

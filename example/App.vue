@@ -1,16 +1,21 @@
 <template>
-  <div><Admin /></div>
+  <div>
+    <component :is="name" />
+  </div>
 </template>
 
 <script>
 import Admin from "./views/Admin.vue";
+import AdminByPageContent from "./views/AdminByPageContent.vue";
 
 export default {
   name: "App",
   data() {
-    return {};
+    return {
+      name: "AdminByPageContent",
+    };
   },
-  components: { Admin },
+  components: { Admin, AdminByPageContent },
   methods: {},
   mounted() {},
 };

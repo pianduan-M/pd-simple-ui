@@ -49,6 +49,8 @@ function handleFormatter(formatter, rowData) {
 }
 
 export function formatRowDataByKey(key, row) {
+
+  console.log(key, 'key');
   if (typeof key !== "string") {
     throw new TypeError("column prop must be a string");
   }
