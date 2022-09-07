@@ -33,7 +33,7 @@ export const formProps = {
     },
   },
 
-  formItemAttrs: {
+  globalFormItemProps: {
     type: Object,
     default() {
       return {};

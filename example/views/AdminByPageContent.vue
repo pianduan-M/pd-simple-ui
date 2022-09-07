@@ -7,6 +7,8 @@
       :selectOptionMap="selectOptionMap"
       :fetch="fetch"
       :responseFormatter="responseFormatter"
+      showFilterColumn
+      :tableAttrs="{ commonColumnOptions: { align: 'center' } }"
     >
       <template #operate="{ row }">
         <el-button type="text" @click="handleEditorAdd(row)">编辑</el-button>

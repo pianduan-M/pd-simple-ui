@@ -9,6 +9,7 @@
         v-model="searchValue"
         :selectOptionMap="selectOptionMap"
         :size="size"
+        v-bind="searchFromAttrs"
       >
         <!-- 透传 slot 给search-form -->
         <template v-for="slot in getSearchFormItemSlotName()" #[slot]="data">
@@ -39,7 +40,7 @@
 
     <br />
     <div>
-      <div>
+      <div class="table-desc">
         <!-- 过滤表格列 -->
         <FilterColumn
           :columns="tableColumns"
@@ -49,6 +50,7 @@
 
       <PdTable
         style="width: 100%"
+        v-bind="tableAttrs"
         :data="tableData"
         border
         :columns="filterTableColumns"
@@ -86,6 +88,7 @@
         :initFormData="initFormData"
         :rules="rules"
         :defaultInputAttrs="{ clearable: true }"
+        v-bind="searchFromAttrs"
       >
         <template #ageLabel>
           <div>年龄年龄年龄年龄</div>
@@ -166,5 +169,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.table-desc {
+  position: relative;
 }
 </style>

@@ -75,6 +75,21 @@ export const pageContentProps = {
   // 列表响应成功后格式化方法
   responseFormatter: Function,
   // 显示查看更多按钮
-  showMoreBtn: false
+  showMoreBtn: false,
+  // 传递给 PdTable 组件
+  tableAttrs: {
+    type: Object,
+    default: () => ({})
+  },
+  // 传递给 PdForm 组件
+  formAttrs: {
+    type: Object,
+    default: () => ({})
+  },
+  // 传递给 PdSearchForm 组件
+  searchFromAttrs: {
+    type: Object,
+    default: () => ({})
+  },
 }
 

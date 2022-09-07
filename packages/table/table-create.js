@@ -42,6 +42,7 @@ export function createTableColumn(h, columns, commonColumnOptions) {
         if (!isNativeColumnType(column.type)) {
           scopedSlots = createScopedSlots.call(this, column, h)
         }
+        console.log(props, 'props');
 
         return h("el-table-column", {
           props: { ...commonColumnOptions, ...props },
@@ -49,6 +50,7 @@ export function createTableColumn(h, columns, commonColumnOptions) {
           class: className,
           style,
           scopedSlots: scopedSlots,
+          key: column.prop || column.label || Math.random()
         })
       }
     });
@@ -88,7 +90,6 @@ function createScopedSlots(column, h) {
           resultSlots[key] = createSlotByStringType.call(this, h, value)
         }
       })
-      console.log(resultSlots, 'resultSlots');
       return resultSlots
     // 如果是 字符串类型 就当做是插槽名使用作用域插槽
     case isString(column.slot):

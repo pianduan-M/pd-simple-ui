@@ -67,22 +67,24 @@
 
 ##### Form Item Attributes
 
-| 参数         | 说明                                                         | 类型            | 可选值                | 默认值 |
-| ------------ | ------------------------------------------------------------ | --------------- | --------------------- | ------ |
-| prop         | 同 el-form-item                                              | string          | —                     | —      |
-| label        | 同 el-form-item                                              | string          | —                     | —      |
-| type         | el-form-item 下的表单元素名                                  | string          | el-input el-select 等 | —      |
-| options      | el-select 的 options 配置，当是 string 类型时，回到 selectOptionMap 中取值 | array string    | —                     | —      |
-| renderLabel  | el-form-item 中 label 值，如果该值是 string 时，将作为插槽名 | function string | —                     | —      |
-| isHidden     | 是否隐藏该项                                                 | boolean         | —                     | —      |
-| layout       | 该项的 el-col props                                          | object          | —                     | —      |
-| itemAttrs    | el-form-item 的 props                                        | object          | —                     | —      |
-| rules        | 同 el-form-item                                              | object          | —                     | —      |
-| style        | el-form-item 样式                                            | object          | —                     | —      |
-| class        | el-form-item 类名                                            | object arrary   | —                     | —      |
-| slotName     | el-form-item 下表单元素的插槽名                              | string          | —                     | —      |
-| inputOptions | el-form-item 下表单元素的配置项                              | object          | —                     | —      |
-| placeholder  | el-form-item 下表单元素的 placeholder                        | string          | —                     | —      |
+| 参数        | 说明                                                         | 类型            | 可选值                | 默认值 |
+| ----------- | ------------------------------------------------------------ | --------------- | --------------------- | ------ |
+| prop        | 同 el-form-item                                              | string          | —                     | —      |
+| label       | 同 el-form-item                                              | string          | —                     | —      |
+| type        | el-form-item 下的表单元素名                                  | string          | el-input el-select 等 | —      |
+| options     | el-select 的 options 配置，当是 string 类型时，回到 selectOptionMap 中取值 | array string    | —                     | —      |
+| renderLabel | el-form-item 中 label 值，如果该值是 string 时，将作为插槽名 | function string | —                     | —      |
+| isHidden    | 是否隐藏该项                                                 | boolean         | —                     | —      |
+| layout      | 该项的 el-col props                                          | object          | —                     | —      |
+| style       | el-form-item 样式                                            | object          | —                     | —      |
+| class       | el-form-item 类名                                            | object arrary   | —                     | —      |
+| slotName    | el-form-item 下表单元素的插槽名                              | string          | —                     | —      |
+| inputAttrs  | el-form-item 下表单元素的配置项  { props, on, class, style } | object          | —                     | —      |
+| placeholder | el-form-item 下表单元素的 placeholder                        | string          | —                     | —      |
+
+其余项将会传递给 form-item 的 props
+
+
 
 ##### Form Item inputOptions
 

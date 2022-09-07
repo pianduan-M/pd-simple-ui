@@ -20,9 +20,14 @@
 
     <br />
 
+    <div>
+      <!-- 过滤表格列 -->
+      <FilterColumn :columns="tableColumns" :showColumnList.sync="selectList" />
+    </div>
+
     <PdTable
       style="width: 100%"
-      :columns="tableColumns"
+      :columns="filterTableColumns"
       border
       @selection-change="onSeletionChange"
       :data="tableData"
@@ -74,6 +79,7 @@
 </template>
 
 <script>
+import FilterColumn from "../../packages/page-content/FilterColumn.vue";
 import { tableColumns } from "./config/table.config";
 import { formItems, searchFormItems } from "./config/form.config";
 import axios from "axios";
@@ -119,6 +125,7 @@ export default {
         gender: [],
       },
       visible: false,
+      selectList: [],
     };
   },
 
@@ -165,6 +172,31 @@ export default {
     searchValue(newVal) {
       console.log(newVal);
     },
+  },
+  computed: {
+    filterTableColumns() {
+      const selectList = this.selectList;
+      let result = this.tableColumns;
+      result = this.tableColumns.filter((item) =>
+        selectList.find((label) => label === item.label)
+      );
+      console.log(result, "result");
+      return result;
+    },
+  },
+  components: { FilterColumn },
+  created() {
+    // 过滤列
+    this.tableColumns.map((item) => {
+      if (
+        (typeof item.show === "boolean" && item.show) ||
+        typeof item.show === "undefined"
+      ) {
+        if (typeof item.label !== "undefined") {
+          this.selectList.push(item.label);
+        }
+      }
+    });
   },
 };
 </script>

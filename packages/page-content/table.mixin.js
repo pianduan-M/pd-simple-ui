@@ -1,6 +1,8 @@
 import { isObject } from "element-ui/src/utils/types"
 import { isFunction, isString } from "../../src/utils/is"
 import pageContentGlobal from './global-options.js'
+import { isNativeColumnType } from '../table/column-type'
+
 
 export default {
   data() {
@@ -16,7 +18,7 @@ export default {
     // 获取列表数据
     async getTableDataList() {
       const params = this.getRequestParams()
-      
+
       const requestList = this.fetch.list
       if (!requestList) {
         throw new Error("需要提供请求方法或者请求路径")
@@ -101,12 +103,17 @@ export default {
   computed: {
     filterTableColumns() {
       const selectList = this.selectList
+
+      console.log(selectList, 'selectList');
       let result = this.tableColumns
       console.log(result, 'result');
 
       // 需要过滤列
       if (this.showFilterColumn) {
-        result = this.tableColumns.filter(item => selectList.find(label => label === item.label));
+        result = this.tableColumns.filter(item => selectList.find(label => {
+          if (isNativeColumnType(item.type)) return true
+          return label === item.label
+        }));
       }
 
       console.log(result, 'result');

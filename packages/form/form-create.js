@@ -19,8 +19,10 @@ export function createFormItems() {
         return !isHidden;
       })
       .map((item) => {
-        const layout = item.layout ? item.layout : this._colLayout;
-        const itemAttrs = isObject(item.attrs) ? item.attrs : {};
+        const { layout, type, options, renderLabel, isHidden, style, class: formItemClassName, slotName, inputAttrs, placeholder, ...rest } = item
+
+        layout = layout ? layout : this._colLayout;
+
         return h(
           "el-col",
           {
@@ -32,15 +34,12 @@ export function createFormItems() {
               "el-form-item",
               {
                 props: {
-                  ...this.formItemAttrs,
-                  ...itemAttrs,
-                  label: item.label,
-                  rules: item.rules,
-                  prop: item.prop,
+                  ...this.globalFormItemProps,
+                  ...rest
                 },
                 scopedSlots: createFormItemChildren.call(this, item),
-                style: item.style,
-                class: item.class,
+                style,
+                class: formItemClassName,
               },
             ),
           ]
@@ -106,10 +105,10 @@ function createFormInputs(item) {
     return createSlots.call(this, item.slotName);
   }
 
-  const props = item.inputOptions?.props || {};
-  const events = item.inputOptions?.on || {};
-  const style = item.inputOptions?.style || {};
-  const className = item.inputOptions?.class || [];
+  const props = item.inputAttrs?.props || {};
+  const events = item.inputAttrs?.on || {};
+  const style = item.inputAttrs?.style || {};
+  const className = item.inputAttrs?.class || [];
 
   // 如果是 select
   let children = "";

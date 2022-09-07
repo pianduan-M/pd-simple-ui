@@ -1,8 +1,8 @@
 <template>
-  <div class="filter-column">
+  <div class="filter-column" :class="[filterColumnPosition]">
     <el-popover placement="left" width="200" trigger="click">
       <el-button type="text" slot="reference"
-        ><i class="el-icon-setting"></i
+        ><i class="el-icon-setting icon-setting"></i
       ></el-button>
       <el-checkbox-group v-model="filterColumns">
         <div v-for="item in columns" :key="item.label">
@@ -30,6 +30,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    filterColumnPosition: {
+      type: String,
+      default: "right",
+    },
   },
   components: {},
   methods: {},
@@ -47,4 +51,24 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.filter-column {
+  float: right;
+  top: 0;
+
+  &.left {
+    left: 0;
+  }
+  &.center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &.right {
+    right: 0;
+  }
+
+  .icon-setting {
+    font-size: 18px;
+  }
+}
+</style>
