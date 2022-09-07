@@ -13,8 +13,8 @@ export default {
       showColumnList: []
     }
   },
-  methods: {
 
+  methods: {
     // 获取列表数据
     async getTableDataList() {
       const params = this.getRequestParams()
@@ -80,6 +80,7 @@ export default {
       if (slot) {
         switch (true) {
           case isString(slot):
+            if (this.showForm && slot === 'operate') return
             result.push(slot)
             break;
           case isObject(slot):
@@ -99,6 +100,7 @@ export default {
       }
     })
 
+    this.getTableDataList()
   },
   computed: {
     filterTableColumns() {

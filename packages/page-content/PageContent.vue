@@ -55,6 +55,17 @@
         border
         :columns="filterTableColumns"
       >
+        <!-- 操作列 -->
+        <template #operate="{ row }" v-if="showForm">
+          <el-link
+            v-for="item in operateBtnList"
+            :key="item.key"
+            :type="getOperateBtnType(item)"
+            @click="handleOperateClick(item, row)"
+            >{{ item.name }}</el-link
+          >
+        </template>
+
         <!-- 透传 slot 给 table 组件 -->
         <template v-for="slot in getTableSlotName(tableColumns)" #[slot]="data">
           <slot :name="slot" v-bind="data" />
@@ -62,8 +73,9 @@
       </PdTable>
 
       <!-- 页码 -->
-      <div>
+      <div class="pagination-container" :class="[paginationPosition]">
         <el-pagination
+          :size="size"
           v-bind="paginationOptions"
           :total="pageValue[pageMapKeys.total]"
           :page-size="pageValue[pageMapKeys.size]"
@@ -76,8 +88,13 @@
         </el-pagination>
       </div>
     </div>
-    <!--
-    <el-dialog :visible="visible">
+
+    <el-dialog
+      :visible="visible"
+      :title="dialogTitle"
+      v-bind="dialogAttrs"
+      v-if="showForm"
+    >
       <PdForm
         :formItems="formItems"
         label-width="auto"
@@ -86,26 +103,31 @@
         :rowAttrs="{ gutter: 50 }"
         ref="formRef"
         :initFormData="initFormData"
-        :rules="rules"
-        :defaultInputAttrs="{ clearable: true }"
         v-bind="searchFromAttrs"
       >
-        <template #ageLabel>
-          <div>年龄年龄年龄年龄</div>
-        </template>
-
-        <template #weight>
-          <el-input type="text" v-model="formData.weight" />
+        <!-- 透传 slot 给 form 组件 -->
+        <template v-for="slot in getFormSlotsName()" #[slot]>
+          <slot :name="slot" :formData="formData" />
         </template>
       </PdForm>
 
       <template #footer>
-        <div class="submit-btns">
-          <el-button size="small" type="primary">保存</el-button>
-          <el-button size="small" @click="visible = false">取消</el-button>
-        </div>
+        <slot name="dialog-footer">
+          <div class="submit-btns">
+            <el-button size="small" type="primary">保存</el-button>
+            <el-button size="small" @click="visible = false">取消</el-button>
+          </div>
+        </slot>
       </template>
-    </el-dialog> -->
+
+      <!-- dialog 默认插槽 -->
+      <slot name="dialog-default"></slot>
+
+      <!-- dialog 标题插槽 -->
+      <template #title>
+        <slot name="dialog-title"></slot>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -115,34 +137,18 @@ import FilterColumn from "./FilterColumn.vue";
 import searchMixin from "./search-mixin.js";
 import tableMixin from "./table.mixin.js";
 import paginationMixin from "./pagination-mixin.js";
+import formMixin from "./form-mixin.js";
 
 export default {
-  mixins: [searchMixin, tableMixin, paginationMixin],
+  mixins: [searchMixin, tableMixin, paginationMixin, formMixin],
   name: "PageContent",
-  data() {
+  provide() {
     return {
-      formData: {
-        name: "",
-        age: "",
-        height: "",
-        gender: "",
-        weight: "",
-      },
-      initFormData: {
-        age: 12,
-      },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: "必输项",
-            trigger: "blur",
-          },
-        ],
-      },
-
-      visible: false,
+      dialogVisible: () => this.visible,
     };
+  },
+  data() {
+    return {};
   },
   props: {
     ...pageContentProps,
@@ -155,7 +161,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .search-input {
   width: 240px;
 }
@@ -173,5 +179,21 @@ export default {
 
 .table-desc {
   position: relative;
+}
+
+.pagination-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: flex-start;
+
+  &.left {
+    justify-content: flex-start;
+  }
+  &.center {
+    justify-content: center;
+  }
+  &.left {
+    justify-content: flex-end;
+  }
 }
 </style>

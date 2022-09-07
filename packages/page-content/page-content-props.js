@@ -16,6 +16,12 @@ export const pageContentProps = {
     type: Array,
     default: () => []
   },
+  // 表单默认值
+  defaultFormData: {
+    type: Object,
+    default: () => ({})
+  },
+
   // select options 异步对象 需要异步获取 option 使用改配置
   selectOptionMap: {
     type: Object,
@@ -91,5 +97,42 @@ export const pageContentProps = {
     type: Object,
     default: () => ({})
   },
+  // pagination position
+  paginationPosition: {
+    type: String,
+    default: 'center'
+  },
+  // 使用编辑新增表单
+  showForm: {
+    type: Boolean,
+    default: true
+  },
+  // 弹窗标题
+  dialogTitleList: {
+    type: Object,
+    default: () => ({
+      edit: '编辑',
+      add: '新增'
+    })
+  },
+  // el-dialog props
+  dialogAttrs: {
+    type: Object,
+    default: () => ({})
+  },
+  // 自动生成操作列的按钮列表
+  operateBtnList: {
+    type: Array,
+    default: () => [
+      {
+        name: "编辑",
+        key: 'edit',
+      },
+      {
+        name: "删除",
+        key: 'delete',
+      },
+    ]
+  }
 }
 

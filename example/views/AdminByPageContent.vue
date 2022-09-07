@@ -9,10 +9,12 @@
       :responseFormatter="responseFormatter"
       showFilterColumn
       :tableAttrs="{ commonColumnOptions: { align: 'center' } }"
+      :defaultFormData.sync="formData"
+      ref="PageContentRef"
     >
-      <template #operate="{ row }">
+      <!-- <template #operate="{ row }">
         <el-button type="text" @click="handleEditorAdd(row)">编辑</el-button>
-      </template>
+      </template> -->
 
       <template #province>
         <span>省份1</span>
@@ -20,6 +22,18 @@
 
       <template #provinceHeader>
         <span>省份头部</span>
+      </template>
+
+      <template #ageLabel>
+        <div>年龄年龄年龄年龄</div>
+      </template>
+
+      <template #weight="{ formData }">
+        <el-input
+          type="text"
+          :value="formData.weight"
+          @input="onWeightChange"
+        />
       </template>
     </PageContent>
   </div>
@@ -42,6 +56,7 @@ export default {
       fetch: {
         list: this.getPersonList,
       },
+      formData: {},
     };
   },
   components: {},
@@ -56,6 +71,9 @@ export default {
       return res.data.data;
     },
     handleEditorAdd() {},
+    onWeightChange(val) {
+      this.$refs.PageContentRef.formData.weight = val;
+    },
   },
   mounted() {},
   computed: {},

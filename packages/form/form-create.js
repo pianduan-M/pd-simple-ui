@@ -19,7 +19,7 @@ export function createFormItems() {
         return !isHidden;
       })
       .map((item) => {
-        const { layout, type, options, renderLabel, isHidden, style, class: formItemClassName, slotName, inputAttrs, placeholder, ...rest } = item
+        let { layout, type, options, renderLabel, isHidden, style, class: formItemClassName, slotName, inputAttrs, placeholder, ...rest } = item
 
         layout = layout ? layout : this._colLayout;
 
@@ -40,6 +40,7 @@ export function createFormItems() {
                 scopedSlots: createFormItemChildren.call(this, item),
                 style,
                 class: formItemClassName,
+                key: item.prop || Math.random()
               },
             ),
           ]
@@ -136,7 +137,7 @@ function createFormInputs(item) {
         const formData = { ...this.value };
         formData[item.prop] = val;
         this.$emit("input", formData);
-        events[modelEventName] && events[modelEventName](val);
+        events[modelEventName] && events[modelEventName](val, item.prop);
       },
     };
   }

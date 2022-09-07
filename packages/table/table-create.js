@@ -42,8 +42,6 @@ export function createTableColumn(h, columns, commonColumnOptions) {
         if (!isNativeColumnType(column.type)) {
           scopedSlots = createScopedSlots.call(this, column, h)
         }
-        console.log(props, 'props');
-
         return h("el-table-column", {
           props: { ...commonColumnOptions, ...props },
           on,

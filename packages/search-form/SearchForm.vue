@@ -136,7 +136,7 @@ export default {
       const searchValue = { ...this.value };
       searchValue[prop] = value;
       if (formItem.on && formItem.on[eventName]) {
-        formItem.on[eventName].call(this.$parent, value);
+        formItem.on[eventName](value, prop);
       }
       this.$emit("input", searchValue);
     },
@@ -151,7 +151,7 @@ export default {
     },
     createFormItemEvents(events) {
       if (events && isObject(events)) {
-        return createEventsObj.call(this.$parent, events);
+        return events;
       }
       return {};
     },

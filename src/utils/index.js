@@ -50,17 +50,16 @@ function handleFormatter(formatter, rowData) {
 
 export function formatRowDataByKey(key, row) {
 
-  console.log(key, 'key');
   if (typeof key !== "string") {
     throw new TypeError("column prop must be a string");
   }
 
-  function hander(keys, row) {
+  function handle(keys, row) {
     let result;
     const firstKey = keys.shift();
     result = row[firstKey];
     if (keys.length > 0) {
-      result = hander(keys, result);
+      result = handle(keys, result);
     }
     return result;
   }
@@ -70,7 +69,7 @@ export function formatRowDataByKey(key, row) {
     return row[splitKey[0]];
   } else {
     try {
-      return hander(splitKey, row);
+      return handle(splitKey, row);
     } catch (error) {
       throw new Error(error);
     }
