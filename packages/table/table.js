@@ -1,6 +1,6 @@
 
 import { createTableColumn } from './table-create'
-import { registerColumnType, tablePluginList } from './column-type'
+import { tablePluginList } from './column-type'
 import { eventBus } from '../../src/utils/event-bus';
 
 
@@ -32,8 +32,8 @@ export default {
     // event bus
     this.eventBus = new eventBus()
 
-    // 列类型注册函数
-    this.registerColumnType = registerColumnType
+  },
+  created() {
     // 注册插件
     tablePluginList.map(execute => execute.call(this))
   },

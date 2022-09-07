@@ -9,7 +9,7 @@ Vue.use(ElementUI);
 
 mockXHR();
 
-PdSimpleUi.PdTable.use(PdSimpleUi.pdTableEnumColumnTypePlugin, {
+PdSimpleUi.PdTable.registerColumnType('enumType', PdSimpleUi.pdTableEnumColumnTypePlugin, {
   getDomClassName(value) {
     let result = ''
     switch (value) {

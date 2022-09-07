@@ -16,6 +16,7 @@ export default {
     // 获取列表数据
     async getTableDataList() {
       const params = this.getRequestParams()
+      
       const requestList = this.fetch.list
       if (!requestList) {
         throw new Error("需要提供请求方法或者请求路径")

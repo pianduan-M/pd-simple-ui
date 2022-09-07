@@ -21,7 +21,7 @@ export function use(fn, options = {}) {
 }
 
 // 注册表格列类型
-export function registerColumnType(columnTypeName, handler) {
+export function registerColumnType(columnTypeName, handler, options) {
   if (!handler && !isFunction(handler)) {
     throw new Error('register table column type must a function')
   }
@@ -29,7 +29,7 @@ export function registerColumnType(columnTypeName, handler) {
   if (!columnTypeName) {
     throw new Error('table column type name is required')
   }
-  columnTypeList[columnTypeName] = handler
+  columnTypeList[columnTypeName] = handler(options)
 
 }
 
@@ -59,8 +59,7 @@ export function pdTableEnumColumnTypePlugin(options) {
 
     return result
   }
-
-  this.registerColumnType('enumType', enumType)
+  return enumType
 }
 
 
