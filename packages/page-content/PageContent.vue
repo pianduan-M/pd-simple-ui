@@ -10,6 +10,7 @@
         :selectOptionMap="selectOptionMap"
         :size="size"
         v-bind="searchFromAttrs"
+        v-on="searchFormListeners"
       >
         <!-- 透传 slot 给search-form -->
         <template v-for="slot in getSearchFormItemSlotName()" #[slot]="data">
@@ -54,10 +55,12 @@
         :data="tableData"
         border
         :columns="filterTableColumns"
+        :selectOptionMap="selectOptionMap"
       >
         <!-- 操作列 -->
         <template #operate="{ row }" v-if="showForm">
           <el-link
+            class="operate-btn__item"
             v-for="item in operateBtnList"
             :key="item.key"
             :type="getOperateBtnType(item)"
@@ -104,6 +107,7 @@
         ref="formRef"
         :initFormData="initFormData"
         v-bind="searchFromAttrs"
+        :selectOptionMap="selectOptionMap"
       >
         <!-- 透传 slot 给 form 组件 -->
         <template v-for="slot in getFormSlotsName()" #[slot]>
@@ -195,5 +199,9 @@ export default {
   &.left {
     justify-content: flex-end;
   }
+}
+
+.operate-btn__item {
+  margin: 0 5px;
 }
 </style>

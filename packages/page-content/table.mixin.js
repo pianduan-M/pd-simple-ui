@@ -3,7 +3,6 @@ import { isFunction, isString } from "../../src/utils/is"
 import pageContentGlobal from './global-options.js'
 import { isNativeColumnType } from '../table/column-type'
 
-
 export default {
   data() {
 
@@ -15,6 +14,25 @@ export default {
   },
 
   methods: {
+    _request(requestFn, requestOptions = {}) {
+      let result
+      // 请求是一个函数
+      if (isFunction(requestFn)) {
+        result = requestFn(requestOptions)
+        // 是 url
+      } else if (isString(requestFn)) {
+        // 调用局部或全局请求方法
+        switch (true) {
+          case this.request && isFunction(this.request):
+            result = this.request({ ...requestOptions, url: requestFn, })
+            break;
+          case pageContentGlobal.globalRequest && isFunction(pageContentGlobal.globalRequest):
+            result = pageContentGlobal.globalRequest({ ...requestOptions, url: requestFn, })
+            break;
+        }
+      }
+      return result
+    },
     // 获取列表数据
     async getTableDataList() {
       const params = this.getRequestParams()
@@ -23,22 +41,8 @@ export default {
       if (!requestList) {
         throw new Error("需要提供请求方法或者请求路径")
       }
-      let result
-      // 请求是一个函数
-      if (isFunction(requestList)) {
-        result = requestList(params)
-        // 是 url
-      } else if (isString(requestList)) {
-        // 调用局部或全局请求方法
-        switch (true) {
-          case this.request && isFunction(this.request):
-            result = this.request({ url: requestList, params })
-            break;
-          case pageContentGlobal.globalRequest && isFunction(pageContentGlobal.globalRequest):
-            result = pageContentGlobal.globalRequest({ url: requestList, params })
-            break;
-        }
-      }
+
+      const result = this._request(requestList, {params})
 
       if (result) {
         result.then(this.handleTableDataResponse, err => console.log(err))
@@ -100,7 +104,6 @@ export default {
       }
     })
 
-    this.getTableDataList()
   },
   computed: {
     filterTableColumns() {
@@ -121,5 +124,8 @@ export default {
       console.log(result, 'result');
       return result
     }
-  }
+  },
+  mounted() {
+    this.getTableDataList()
+  },
 }

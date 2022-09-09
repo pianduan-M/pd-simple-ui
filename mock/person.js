@@ -1,7 +1,7 @@
 const Mock = require("mockjs");
 
 let { personList } = Mock.mock({
-  "personList|1-20": [
+  "personList|1-50": [
     {
       "id|+1": 1,
       createTime: "@date('yyyy-MM-dd')",
@@ -13,7 +13,7 @@ let { personList } = Mock.mock({
       "gender|1": ["man", "woman"],
       networkTime: "@integer(10,100)",
       homeTown: "@integer(1,2)",
-
+      "profession": "@integer(1,6)",
     },
   ],
 });
@@ -23,8 +23,41 @@ module.exports = [
   {
     url: "/api/person/list",
     type: "get",
-    response: () => {
-      // const { token } = config.query
+    response: (config) => {
+      const { page, size, name, age, profession, gender } = config.query
+      console.log(config, 'config');
+      const query = [], result = []
+      switch (true) {
+        case !!name:
+          query.push({ key: 'name', value: name })
+          break;
+        case !!age:
+          query.push({ key: 'age', value: age })
+          break;
+        case !!profession:
+          query.push({ key: 'profession', value: profession })
+          break;
+        case !!gender:
+          query.push({ key: 'gender', value: gender })
+          break;
+      }
+
+      const filterList = personList.filter(item => {
+        let result = true
+        for (let i = 0; i < query.length; i++) {
+          const queryItem = query[i];
+          if (item[queryItem.key] != queryItem.value) {
+            result = false
+            break
+          }
+        }
+        return result
+      })
+
+      let resultList = filterList
+      if (page && size) {
+        resultList = filterList.slice((page - 1) * size, page * size)
+      }
 
       const info = {
         roleId: 1,
@@ -41,8 +74,37 @@ module.exports = [
 
       return {
         code: 200,
-        data: personList,
-        total: personList.length,
+        data: resultList,
+        total: filterList.length,
+      };
+    },
+  },
+  {
+    url: "/api/person",
+    type: "delete",
+    response: (config) => {
+      const { id } = config.query
+
+      if (!id) {
+        return {
+          code: 500,
+          message: "failed to delete person",
+        };
+      }
+
+      const existingIndex = personList.findIndex(person => person.id == id)
+      if (existingIndex) {
+        personList.splice(existingIndex, 1);
+      } else {
+        return {
+          code: 500,
+          message: "not find person id: " + id,
+        };
+      }
+
+      return {
+        code: 200,
+        message: "success"
       };
     },
   },

@@ -61,7 +61,6 @@ export default {
       }
 
     },
-
     getSearchFormItemSlotName() {
       const result = []
       this.searchFormItems.map(item => {
@@ -90,7 +89,19 @@ export default {
       const pageValue = { ...this.pageValue }
       delete pageValue[this.pageMapKeys.total]
       return { ...pageValue, ...this.searchValue }
-    }
-  },
+    },
+    handleSearchFormInput() {
+      this.getTableDataList()
+    },
 
+  },
+  computed: {
+    searchFormListeners() {
+      const result = {}
+      if (this.isSearchFormChangeRequest) {
+        result.input = this.handleSearchFormInput
+      }
+      return result
+    }
+  }
 }

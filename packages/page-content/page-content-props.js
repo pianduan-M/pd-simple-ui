@@ -21,7 +21,6 @@ export const pageContentProps = {
     type: Object,
     default: () => ({})
   },
-
   // select options 异步对象 需要异步获取 option 使用改配置
   selectOptionMap: {
     type: Object,
@@ -31,6 +30,11 @@ export const pageContentProps = {
   searchFormParams: {
     type: Object,
     default: () => ({})
+  },
+  // 是否搜索表单改变后立即发送请求
+  isSearchFormChangeRequest: {
+    type: Boolean,
+    default: false
   },
   // 页面配置
   pageData: {
@@ -133,6 +137,14 @@ export const pageContentProps = {
         key: 'delete',
       },
     ]
+  },
+  onTableColumnDelete: {
+    type: Function,
+    default: null
+  },
+  deleteConfirmText: {
+    type: String,
+    default: '此操作将永久删除, 是否继续?'
   }
 }
 

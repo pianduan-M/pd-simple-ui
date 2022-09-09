@@ -11,11 +11,9 @@
       :tableAttrs="{ commonColumnOptions: { align: 'center' } }"
       :defaultFormData.sync="formData"
       ref="PageContentRef"
+      :searchFromAttrs="searchFromAttrs"
+      :isSearchFormChangeRequest="true"
     >
-      <!-- <template #operate="{ row }">
-        <el-button type="text" @click="handleEditorAdd(row)">编辑</el-button>
-      </template> -->
-
       <template #province>
         <span>省份1</span>
       </template>
@@ -52,18 +50,29 @@ export default {
     this.searchFormItems = searchFormItems;
 
     return {
-      selectOptionMap: {},
+      selectOptionMap: {
+        gender: [],
+      },
       fetch: {
         list: this.getPersonList,
+        delete: "/api/person/list",
       },
       formData: {},
+      searchFromAttrs: {
+        commonFormProps: { clearable: true },
+      },
     };
   },
   components: {},
   methods: {
-    async getPersonList() {
-      return axios.get("/api/person/list");
+    getPersonList({ params }) {
+      return axios.request({ method: "get", url: "/api/person/list", params });
     },
+    // fetchDeletePersonById({ params }) {
+    //   const { id } = params;
+    //   return axios.request({ method: "del", url: "/api/person/list", params });
+    // },
+
     responseFormatter(res, pageValue) {
       console.log(res, pageValue, "res, pageValue");
       pageValue.total = res.data.total;
@@ -75,7 +84,18 @@ export default {
       this.$refs.PageContentRef.formData.weight = val;
     },
   },
-  mounted() {},
+  mounted() {
+    this.selectOptionMap.gender = [
+      {
+        label: "男",
+        value: "man",
+      },
+      {
+        label: "女",
+        value: "woman",
+      },
+    ];
+  },
   computed: {},
 };
 </script>

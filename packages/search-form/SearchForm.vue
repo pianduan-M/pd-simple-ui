@@ -129,6 +129,10 @@ export default {
         return {};
       },
     },
+    commonFormProps: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   components: {},
   methods: {
@@ -169,11 +173,15 @@ export default {
       } = item;
       switch (true) {
         case this.isDateType(type):
-          result = { ...this.defaultProps.date, ...rest };
+          result = {
+            ...this.commonFormProps,
+            ...this.defaultProps.date,
+            ...rest,
+          };
           break;
 
         default:
-          result = { ...rest };
+          result = { ...this.commonFormProps, ...rest };
           break;
       }
       return result;
