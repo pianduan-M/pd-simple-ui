@@ -13,6 +13,8 @@
       ref="PageContentRef"
       :searchFromAttrs="searchFromAttrs"
       :isSearchFormChangeRequest="true"
+      :request="requestHelper"
+      :searchBtnList="searchBtnList"
     >
       <template #province>
         <span>省份1</span>
@@ -49,6 +51,21 @@ export default {
     this.formItems = formItems;
     this.searchFormItems = searchFormItems;
 
+    this.searchBtnList = [
+      {
+        key: "search",
+        name: "搜索",
+      },
+      {
+        key: "add",
+        name: "新增",
+      },
+      {
+        key: "delete",
+        name: "删除",
+      },
+    ];
+
     return {
       selectOptionMap: {
         gender: [],
@@ -74,14 +91,15 @@ export default {
     // },
 
     responseFormatter(res, pageValue) {
-      console.log(res, pageValue, "res, pageValue");
       pageValue.total = res.data.total;
-      console.log(pageValue, "pageValue");
       return res.data.data;
     },
     handleEditorAdd() {},
     onWeightChange(val) {
       this.$refs.PageContentRef.formData.weight = val;
+    },
+    requestHelper(options) {
+      return axios.request(options);
     },
   },
   mounted() {

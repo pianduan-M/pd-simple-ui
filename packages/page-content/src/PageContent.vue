@@ -56,6 +56,7 @@
         border
         :columns="filterTableColumns"
         :selectOptionMap="selectOptionMap"
+        @selection-change="onSelectionChange"
       >
         <!-- 操作列 -->
         <template #operate="{ row }" v-if="showForm">

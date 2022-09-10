@@ -1,4 +1,4 @@
-import { isObject } from '../../src/utils/is'
+import { isObject } from '../../../src/utils/is'
 import pageContentGlobal from './global-options.js'
 
 
@@ -31,7 +31,6 @@ export default {
     Object.keys(mapKeys).forEach(key => {
       const _key = mapKeys[key]
       const value = this.pageData[_key]
-      console.log(value, _key, 'paginationOptions');
       this.$set(this.pageValue, _key, value)
     })
   },
@@ -50,5 +49,21 @@ export default {
       this.pageValue[this.pageMapKeys.page] = val
       this.getTableDataList()
     },
+    // 删除后重新计算 page number
+    recalculatePageNum(length) {
+      const total = this.pageValue[this.pageMapKeys.total]
+      if (total <= 0) return
+      const page = this.pageValue[this.pageMapKeys.page]
+      const size = this.pageValue[this.pageMapKeys.size]
+      let totalPage = parseInt(total / size, 10)
+      const remainder = total % size
+      totalPage = remainder > 0 ? ++totalPage : totalPage
+
+      if (page === totalPage && remainder > 0) {
+        if (remainder - length <= 0) {
+          this.pageValue[this.pageMapKeys.page] = this.pageValue[this.pageMapKeys.page] > 1 ? this.pageValue[this.pageMapKeys.page] - 1 : 1
+        }
+      }
+    }
   }
 }

@@ -82,23 +82,38 @@ module.exports = [
   {
     url: "/api/person",
     type: "delete",
-    response: (config) => {
-      const { id } = config.query
+    response: async (config) => {
+      let { id: ids } = config.query
+      console.log(ids, 'ids');
 
-      if (!id) {
+      if (!ids) {
         return {
           code: 500,
           message: "failed to delete person",
         };
       }
 
-      const existingIndex = personList.findIndex(person => person.id == id)
-      if (existingIndex) {
-        personList.splice(existingIndex, 1);
-      } else {
+      ids = ids.split(",");
+
+      const promiseList = ids.map(id => {
+        const existingIndex = personList.findIndex(person => person.id == +id)
+        if (existingIndex >= 0) {
+          return Promise.resolve(existingIndex)
+        }
+        return Promise.reject()
+      })
+
+      try {
+        await Promise.all(promiseList)
+        ids.map(id => {
+          const index = personList.findIndex(person => person.id == +id)
+          personList.splice(index, 1)
+        })
+      } catch (error) {
+        console.log(error, 'error');
         return {
           code: 500,
-          message: "not find person id: " + id,
+          message: "not find person id: " + ids,
         };
       }
 

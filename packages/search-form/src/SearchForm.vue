@@ -83,8 +83,7 @@
 </template>
 
 <script>
-import { isString, isArray, isObject } from "../../src/utils/is";
-import { createEventsObj } from "../../src/utils/index";
+import { isString, isArray, isObject } from "../../../src/utils/is";
 import defaultProps, { dateTypes } from "./default-props";
 
 export default {

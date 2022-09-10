@@ -1,10 +1,10 @@
-import { isObject, isFunction, isString, isArray } from "../../src/utils/is";
-import { isVNode } from '../../src/utils/vdom'
+import { isObject, isFunction, isString, isArray } from "../../../src/utils/is";
+import { isVNode } from '../../../src/utils/vdom'
 import { columnTypeList, isNativeColumnType } from './column-type'
 
 import {
   formatRowDataByKey,
-} from "../../src/utils/index";
+} from "../../../src/utils/index";
 
 // 创建表格列
 export function createTableColumn(h, columns, commonColumnOptions) {

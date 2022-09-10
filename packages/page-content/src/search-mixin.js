@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     getSearchBtnComponent(item) {
-      console.log(item, 'getSearchBtnComponent');
       const key = item.key
       switch (key) {
         case 'search':
@@ -55,7 +54,7 @@ export default {
         case 'edit':
           return this.handleEdit(item)
         case 'delete':
-          return this.handleDelete(item)
+          return this.onDelete(item)
         default:
           return () => { }
       }
@@ -82,8 +81,10 @@ export default {
     handleEdit() {
 
     },
-    handleDelete() {
-
+    onDelete() {
+      if (!this.tableSelectionList || this.tableSelectionList.length === 0) return
+      const ids = this.tableSelectionList.map(item => item.id).join(',')
+      this.handleDelete(ids)
     },
     getRequestParams() {
       const pageValue = { ...this.pageValue }

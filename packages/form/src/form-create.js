@@ -1,5 +1,5 @@
-import { isObject, isFunction, isString, isUndef } from "../../src/utils/is";
-import { createEventsObj, getSelectOptions } from "../../src/utils/index";
+import { isObject, isFunction, isString, isUndef } from "../../../src/utils/is";
+import { createEventsObj, getSelectOptions } from "../../../src/utils/index";
 
 // 创建 form item
 export function createFormItems() {

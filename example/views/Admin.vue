@@ -19,12 +19,6 @@
     </PdSearchForm>
 
     <br />
-
-    <div>
-      <!-- 过滤表格列 -->
-      <FilterColumn :columns="tableColumns" :showColumnList.sync="selectList" />
-    </div>
-
     <PdTable
       style="width: 100%"
       :columns="filterTableColumns"
@@ -79,14 +73,12 @@
 </template>
 
 <script>
-import FilterColumn from "../../packages/page-content/FilterColumn.vue";
 import { tableColumns } from "./config/table.config";
 import { formItems, searchFormItems } from "./config/form.config";
 import axios from "axios";
 
 export default {
-  name: "user",
-
+  name: "Admin",
   provide() {
     return {
       dialogVisible: () => this.visible,
@@ -184,7 +176,7 @@ export default {
       return result;
     },
   },
-  components: { FilterColumn },
+  components: {},
   created() {
     // 过滤列
     this.tableColumns.map((item) => {

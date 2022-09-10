@@ -1,5 +1,5 @@
-import PdTable from "./table";
-import { use, registerColumnType } from './column-type'
+import PdTable from "./src/table";
+import { use, registerColumnType } from './src/column-type'
 // 列类型注册函数
 
 PdTable.install = function (Vue) {

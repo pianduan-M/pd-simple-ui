@@ -1,33 +1,33 @@
-import { isObject } from "element-ui/src/utils/types"
-import { isFunction, isString } from "../../src/utils/is"
+import { isFunction, isString, isObject } from "../../../src/utils/is"
 import pageContentGlobal from './global-options.js'
-import { isNativeColumnType } from '../table/column-type'
+import { isNativeColumnType } from '../../table/src/column-type'
 
 export default {
   data() {
-
+    this.tableSelectionList = []
     return {
       selectList: [],
       tableData: [],
-      showColumnList: []
+      showColumnList: [],
+
     }
   },
 
   methods: {
-    _request(requestFn, requestOptions = {}) {
+    _request(requestHandle, requestOptions = {}) {
       let result
       // 请求是一个函数
-      if (isFunction(requestFn)) {
-        result = requestFn(requestOptions)
+      if (isFunction(requestHandle)) {
+        result = requestHandle(requestOptions)
         // 是 url
-      } else if (isString(requestFn)) {
+      } else if (isString(requestHandle)) {
         // 调用局部或全局请求方法
         switch (true) {
           case this.request && isFunction(this.request):
-            result = this.request({ ...requestOptions, url: requestFn, })
+            result = this.request({ ...requestOptions, url: requestHandle, })
             break;
           case pageContentGlobal.globalRequest && isFunction(pageContentGlobal.globalRequest):
-            result = pageContentGlobal.globalRequest({ ...requestOptions, url: requestFn, })
+            result = pageContentGlobal.globalRequest({ ...requestOptions, url: requestHandle, })
             break;
         }
       }
@@ -42,7 +42,7 @@ export default {
         throw new Error("需要提供请求方法或者请求路径")
       }
 
-      const result = this._request(requestList, {params})
+      const result = this._request(requestList, { params })
 
       if (result) {
         result.then(this.handleTableDataResponse, err => console.log(err))
@@ -65,7 +65,6 @@ export default {
           break;
       }
       this.$emit("on-request-list-success", this.tableData)
-      console.log(this.tableData, ' this.tableData');
     },
     getTableSlotName(columns) {
       const result = []
@@ -92,6 +91,11 @@ export default {
             break;
         }
       }
+    },
+    // onSelectionChange
+    onSelectionChange(selection) {
+      this.tableSelectionList = selection
+      this.$emit('selection-change', selection)
     }
   },
   created() {
@@ -108,11 +112,7 @@ export default {
   computed: {
     filterTableColumns() {
       const selectList = this.selectList
-
-      console.log(selectList, 'selectList');
       let result = this.tableColumns
-      console.log(result, 'result');
-
       // 需要过滤列
       if (this.showFilterColumn) {
         result = this.tableColumns.filter(item => selectList.find(label => {
@@ -120,8 +120,6 @@ export default {
           return label === item.label
         }));
       }
-
-      console.log(result, 'result');
       return result
     }
   },

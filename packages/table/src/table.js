@@ -1,7 +1,7 @@
 
 import { createTableColumn } from './table-create'
 import { tablePluginList } from './column-type'
-import { eventBus } from '../../src/utils/event-bus';
+import { eventBus } from '../../../src/utils/event-bus';
 
 
 export default {

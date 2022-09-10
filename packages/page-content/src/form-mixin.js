@@ -1,5 +1,4 @@
-import { isFunction, isString } from "../../src/utils/is"
-
+import { isFunction, isString, isObject } from "../../../src/utils/is"
 
 export default {
   data() {
@@ -32,12 +31,13 @@ export default {
           this.handleEdit(row)
           break;
         case 'delete':
-          this.handleDeleteByItem(row)
+          this.handleDelete(row)
           break;
         default:
           this.$emit(`on-${item.key}`, row)
       }
     },
+    // 处理编辑
     handleEdit(row) {
       console.log(row, 'handleEdit');
       this.initFormData = { ...row }
@@ -71,10 +71,20 @@ export default {
       }
       return defaultValue[key]
     },
-    handleDeleteByItem(row) {
+    // 监听删除
+    handleDelete(params) {
+      console.log(params, 'params');
+
+      let ids = ''
+      if (isObject(params)) {
+        ids = params.id
+      } else if (isString(params)) {
+        ids = params
+      }
+      if (!ids) return
       // 如果有处理删除的方法
       if (this.onTableColumnDelete && isFunction(onTableColumnDelete)) {
-        this.onTableColumnDelete(row, this.getTableDataList)
+        this.onTableColumnDelete(ids, this.getTableDataList)
       } else {
         if (!this.$confirm) {
           return new Error("not this.$confirm")
@@ -84,7 +94,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.handleDeleteTableColumnRequest(row)
+          this.handleDeleteTableColumnRequest(ids)
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -94,23 +104,28 @@ export default {
 
       }
     },
-    handleDeleteTableColumnRequest(row) {
+    // 处理删除请求
+    handleDeleteTableColumnRequest(id) {
       const deleteFetch = this.fetch.delete
       if (!deleteFetch) {
         throw new Error("需要提供请求方法或者请求路径")
       }
-      const result = this._request(deleteFetch, { params: { id: row.id } })
+      const result = this._request(deleteFetch, { params: { id }, method: "delete" })
       if (result) {
         result.then(() => {
+          this.$emit('on-delete-success', id)
           this.$message({
             type: 'success',
             message: '删除成功!'
           });
+          this.recalculatePageNum(id.split(",").length)
+          this.getTableDataList()
         }, err => {
           this.$message({
             type: 'error',
             message: err.message || '删除失败，请稍后重试'
           });
+          this.$emit('on-delete-error', err)
         })
       }
     }

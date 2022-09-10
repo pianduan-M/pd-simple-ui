@@ -1,9 +1,9 @@
 import PdForm from "./form";
 import PdTable from "./table";
 import PdSearchForm from "./search-form";
-import PageContent from "./page-content/PageContent.vue";
+import PageContent from "./page-content";
 
-import { pdTableEnumColumnTypePlugin } from './table/column-type'
+import { pdTableEnumColumnTypePlugin } from './table/src/column-type'
 
 const components = [PdForm, PdTable, PdSearchForm, PageContent];
 

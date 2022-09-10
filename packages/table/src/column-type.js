@@ -1,7 +1,7 @@
-import { isFunction, isArray } from "../../src/utils/is"
+import { isFunction, isArray } from "../../../src/utils/is"
 import {
   formatRowDataByKey,
-} from "../../src/utils/index";
+} from "../../../src/utils/index";
 
 
 // 储存 column type

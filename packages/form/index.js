@@ -1,4 +1,4 @@
-import PdForm from "./form.vue";
+import PdForm from "./src/form.vue";
 
 PdForm.install = function (Vue) {
   Vue.component(PdForm.name, PdForm);

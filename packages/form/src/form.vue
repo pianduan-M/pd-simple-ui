@@ -1,6 +1,5 @@
 <script>
-import { isObject, isFunction, isString, isUndef } from "../../src/utils/is";
-import { createEventsObj, getSelectOptions } from "../../src/utils/index";
+import { isObject, isFunction, isString, isUndef } from "../../../src/utils/is";
 import { createFormItems } from "./form-create";
 import { formProps } from "./form-props";
 
