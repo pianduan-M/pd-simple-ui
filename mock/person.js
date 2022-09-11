@@ -25,22 +25,24 @@ module.exports = [
     type: "get",
     response: (config) => {
       const { page, size, name, age, profession, gender } = config.query
-      console.log(config, 'config');
       const query = [], result = []
-      switch (true) {
-        case !!name:
-          query.push({ key: 'name', value: name })
-          break;
-        case !!age:
-          query.push({ key: 'age', value: age })
-          break;
-        case !!profession:
-          query.push({ key: 'profession', value: profession })
-          break;
-        case !!gender:
-          query.push({ key: 'gender', value: gender })
-          break;
-      }
+
+      Object.keys(config.query).forEach(key => {
+        switch (key) {
+          case 'name':
+            !!name && query.push({ key: 'name', value: name })
+            break;
+          case 'age':
+            !!age && query.push({ key: 'age', value: age })
+            break;
+          case 'profession':
+            !!profession && query.push({ key: 'profession', value: profession })
+            break;
+          case 'gender':
+            !!gender && query.push({ key: 'gender', value: gender })
+            break;
+        }
+      })
 
       const filterList = personList.filter(item => {
         let result = true
