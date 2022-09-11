@@ -1,4 +1,4 @@
-
+import { debounce } from '../../../src/utils/debounce-throttle'
 
 export default {
   data() {
@@ -98,7 +98,8 @@ export default {
     searchFormListeners() {
       const result = {}
       if (this.isSearchFormChangeRequest) {
-        result.input = this.handleSearchFormInput
+        const helper = debounce(this.handleSearchFormInput, 300, false).bind(this)
+        result.input = helper
       }
       return result
     }
