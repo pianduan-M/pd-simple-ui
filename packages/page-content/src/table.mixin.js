@@ -9,7 +9,7 @@ export default {
       selectList: [],
       tableData: [],
       showColumnList: [],
-
+      tableLoading: false
     }
   },
 
@@ -36,16 +36,21 @@ export default {
     // 获取列表数据
     async getTableDataList() {
       const params = this.getRequestParams()
-
       const requestList = this.fetch.list
       if (!requestList) {
         throw new Error("需要提供请求方法或者请求路径")
       }
-
+      this.tableLoading = true
       const result = this._request(requestList, { params })
 
       if (result) {
-        result.then(this.handleTableDataResponse, err => console.log(err))
+        result.then((res) => {
+          this.handleTableDataResponse(res)
+          this.tableLoading = false
+        }, err => {
+          this.tableLoading = false
+          console.log(err)
+        })
       }
 
     },

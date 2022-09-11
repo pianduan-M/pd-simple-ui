@@ -57,6 +57,7 @@
         :columns="filterTableColumns"
         :selectOptionMap="selectOptionMap"
         @selection-change="onSelectionChange"
+        v-loading="tableLoading"
       >
         <!-- 操作列 -->
         <template #operate="{ row }" v-if="showForm">
@@ -120,7 +121,13 @@
       <template #footer>
         <slot name="dialog-footer">
           <div class="submit-btns">
-            <el-button size="small" type="primary" :loading="saveBtnLoading" @click="handleSave">保存</el-button>
+            <el-button
+              size="small"
+              type="primary"
+              :loading="saveBtnLoading"
+              @click="handleSave"
+              >保存</el-button
+            >
             <el-button size="small" @click="visible = false">取消</el-button>
           </div>
         </slot>
