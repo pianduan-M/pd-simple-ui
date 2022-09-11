@@ -145,6 +145,11 @@ export const pageContentProps = {
   deleteConfirmText: {
     type: String,
     default: '此操作将永久删除, 是否继续?'
+  },
+  // 编辑前格式化 row 数据
+  beforeEditFormatter: {
+    type: Function,
+    default: null
   }
 }
 

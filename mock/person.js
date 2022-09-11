@@ -123,4 +123,60 @@ module.exports = [
       };
     },
   },
+  {
+    url: "/api/person",
+    type: "put",
+    response: (config) => {
+      const { body } = config
+      const id = body.id
+
+      if (!id) {
+        return {
+          code: 500,
+          message: "missing id",
+        }
+      }
+
+      const existingIndex = personList.findIndex(person => person.id == +id)
+
+      if (existingIndex < 0) {
+        return {
+          code: 500,
+          message: "not found person with id: " + id,
+        }
+      }
+
+      let person = personList[existingIndex]
+      person = {
+        ...person,
+        ...body,
+      }
+      personList[existingIndex] = person
+
+      return {
+        code: 200,
+        message: "success"
+      }
+    }
+
+  },
+  {
+    url: "/api/person",
+    type: "post",
+    response: (config) => {
+      const { body } = config
+      const id = personList.length
+      const person = {
+        ...body,
+        id
+      }
+
+      personList.unshift(person)
+      return {
+        code: 200,
+        message: "success"
+      }
+
+    }
+  }
 ];

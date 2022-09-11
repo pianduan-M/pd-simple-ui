@@ -6,9 +6,12 @@ export default {
       initFormData: {},
       visible: false,
       formData: {},
+      saveBtnLoading: false
     }
   },
-  created() { },
+  created() {
+    this.mapFormItems()
+  },
   methods: {
     getOperateBtnType(item) {
       if (item.type) return item.type
@@ -39,11 +42,70 @@ export default {
     },
     // 处理编辑
     handleEdit(row) {
-      console.log(row, 'handleEdit');
+      if (this.beforeEditFormatter && isFunction(this.beforeEditFormatter)) {
+        row = this.beforeEditFormatter(row)
+      }
       this.initFormData = { ...row }
       this.visible = true
-      console.log(this.initFormData, 'initFormData');
     },
+    // 处理表单保存
+    async handleSave() {
+      let formData
+
+      // 表单校验
+      try {
+        await this.$refs.formRef.validate()
+      } catch (error) {
+        return this.$emit("on-form-validate-error", error)
+      }
+
+      // 如果表单保存前处理方法，返回值作为后端请求数据，可以算是保存前最后的数据格式化
+      if (this.beforeSaveHelper && !isFunction(this.beforeSaveHelper)) {
+        try {
+          const res = await this.beforeSaveHelper(this.formData)
+          if (res && isObject(res)) {
+            formData = res
+          }
+        } catch (error) {
+          return
+        }
+      }
+
+      if (!formData) {
+        formData = { ...this.formData }
+      }
+
+      let requestHelper
+      if (formData.id) {
+        requestHelper = this.fetch.edit
+      } else {
+        requestHelper = this.fetch.add
+      }
+
+      if (!requestHelper) {
+        throw new Error("需要提供请求方法或者请求路径")
+      }
+
+      this.saveBtnLoading = true
+
+      const result = this._request(requestHelper, { data: formData, method: formData.id ? 'put' : 'post' })
+
+      if (result) {
+        result.then(() => {
+          this.$message.success('保存成功')
+          this.getTableDataList()
+          this.$emit("save-form-success")
+          this.visible = false
+          this.saveBtnLoading = false
+        }, err => {
+          this.$message.error(err.message)
+          this.$emit("save-form-error", err)
+          this.saveBtnLoading = false
+        })
+      }
+
+    },
+
     getFormSlotsName() {
       const result = []
       this.formItems.map(item => {
@@ -73,8 +135,6 @@ export default {
     },
     // 监听删除
     handleDelete(params) {
-      console.log(params, 'params');
-
       let ids = ''
       if (isObject(params)) {
         ids = params.id
@@ -110,6 +170,8 @@ export default {
       if (!deleteFetch) {
         throw new Error("需要提供请求方法或者请求路径")
       }
+      console.log(id, 'id');
+
       const result = this._request(deleteFetch, { params: { id }, method: "delete" })
       if (result) {
         result.then(() => {
@@ -118,7 +180,7 @@ export default {
             type: 'success',
             message: '删除成功!'
           });
-          this.recalculatePageNum(id.split(",").length)
+          this.recalculatePageNum(String(id).split(",").length)
           this.getTableDataList()
         }, err => {
           this.$message({
@@ -128,6 +190,14 @@ export default {
           this.$emit('on-delete-error', err)
         })
       }
+    },
+    // 根据表单配置项绑定key
+    mapFormItems(data = {}) {
+      this.formItems.map(item => {
+        if (item.prop) {
+          this.$set(this.formData, item.prop, data[item.prop])
+        }
+      })
     }
 
   },

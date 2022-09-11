@@ -76,10 +76,8 @@ export default {
       this.getTableDataList()
     },
     handleAdd() {
-
-    },
-    handleEdit() {
-
+      this.visible = true
+      this.initFromData = {}
     },
     onDelete() {
       if (!this.tableSelectionList || this.tableSelectionList.length === 0) return

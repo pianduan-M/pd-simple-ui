@@ -25,11 +25,15 @@ export default {
           Object.keys(this.value).forEach((key) => {
             const formItemValue = this.initFormData[key];
             if (isUndef(formItemValue)) {
-              newFormData[key] = "";
+              newFormData[key] = undefined;
             } else {
               newFormData[key] = formItemValue;
             }
           });
+
+          if (newVal.id) {
+            newFormData.id = newVal.id;
+          }
 
           this.$emit("input", newFormData);
         }

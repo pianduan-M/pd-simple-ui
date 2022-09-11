@@ -50,6 +50,7 @@ export const formItems = [
   {
     label: "体重",
     slotName: "weight",
+    prop: "weight",
   },
 ];
 

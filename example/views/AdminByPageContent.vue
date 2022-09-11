@@ -73,6 +73,8 @@ export default {
       fetch: {
         list: this.getPersonList,
         delete: "/api/person/list",
+        edit: "/api/person",
+        add: "/api/person",
       },
       formData: {},
       searchFromAttrs: {

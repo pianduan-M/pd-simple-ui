@@ -103,6 +103,7 @@
         :formItems="formItems"
         label-width="auto"
         :colLayout="{ span: 24 }"
+        :model="formData"
         v-model="formData"
         :rowAttrs="{ gutter: 50 }"
         ref="formRef"
@@ -119,7 +120,7 @@
       <template #footer>
         <slot name="dialog-footer">
           <div class="submit-btns">
-            <el-button size="small" type="primary">保存</el-button>
+            <el-button size="small" type="primary" :loading="saveBtnLoading" @click="handleSave">保存</el-button>
             <el-button size="small" @click="visible = false">取消</el-button>
           </div>
         </slot>
