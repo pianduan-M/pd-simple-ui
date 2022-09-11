@@ -1,11 +1,11 @@
-import { isFunction, isArray } from "../../../src/utils/is"
+import { isFunction, isArray, isString } from "../../../src/utils/is"
 import {
   formatRowDataByKey,
 } from "../../../src/utils/index";
 
 
 // 储存 column type
-export const columnTypeList = {}
+export const columnTypeList = { enum: columnTypeByEnum }
 
 // 储存注册的 plugin
 export const tablePluginList = []
@@ -60,6 +60,21 @@ export function pdTableEnumColumnTypePlugin(options) {
     return result
   }
   return enumType
+}
+
+// 枚举类型
+export function columnTypeByEnum(h, row, column) {
+  let result = this.nullValueDefault
+  let { prop, enumList, } = column
+  let value = formatRowDataByKey(prop, row);
+  enumList = isString(enumList) ? this.selectOptionMap[enumList] : enumList
+
+  if (isArray(enumList)) {
+    const existingEnumItem = enumList.find(item => item.value === value)
+    const enumLabel = existingEnumItem ? existingEnumItem.label : null
+    result = enumLabel || result
+  }
+  return result
 }
 
 

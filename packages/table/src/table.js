@@ -19,6 +19,12 @@ export default {
         return {};
       },
     },
+    selectOptionMap: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
     nullValueDefault: {
       default: "-",
     },

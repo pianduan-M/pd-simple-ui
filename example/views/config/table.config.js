@@ -1,6 +1,5 @@
 
 import TableImage from '../../components/TableImage.vue'
-import { professionOptions } from '../../assets/constant'
 
 const genders = {
   man: "男",
@@ -47,7 +46,7 @@ export const tableColumns = [
   },
   { label: "身高", prop: "height", unit: "m" },
   { label: "体重", prop: "weight", unit: "kg" },
-  { label: "职业", prop: "profession", type: "enumType", enumList: professionOptions },
+  { label: "职业", prop: "profession", type: "enum", enumList: 'professionOptions' },
   {
     label: "头像",
     minWidth: 200,

@@ -43,6 +43,7 @@
 import { tableColumns } from "./config/table.config";
 import { formItems, searchFormItems } from "./config/form.config";
 import axios from "axios";
+import { professionOptions } from "../assets/constant";
 
 export default {
   name: "AdminByPageContent",
@@ -69,6 +70,7 @@ export default {
     return {
       selectOptionMap: {
         gender: [],
+        professionOptions: [],
       },
       fetch: {
         list: this.getPersonList,
@@ -115,6 +117,7 @@ export default {
         value: "woman",
       },
     ];
+    this.selectOptionMap.professionOptions = professionOptions;
   },
   computed: {},
 };

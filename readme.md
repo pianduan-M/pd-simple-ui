@@ -10,7 +10,8 @@
 | ------------------- | ------------------------------------------------------------ | ------ | ------ | ------ |
 | columns             | 表格列的配置项 详细配置看下下方                              | array  | —      | —      |
 | commonColumnOptions | 表格列的公共配置，element-ui table-column 的 props 配置，该配置应用到每一列，会被 columns 中的配置覆盖 | object | —      | —      |
-| nullValueDefault    | 如果列的值为空时 默认显示的 value                            | string | -      | -      |
+| nullValueDefault    | 如果列的值为空时 默认显示的 value                            | string | —      | —      |
+| selectOptionMap     | enumList 需要异步获取时，可用此字段传值，此时 enumList 为字段名 | object | —      | —      |
 
 其他所有 attrs 都会作为 el-table 的 props, 所有事件都会传递给 el-table
 
