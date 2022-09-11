@@ -110,6 +110,7 @@
 | inputClass      | 表单项下表单元素类名                                         | object array | —             | —      |
 | labelSuffix     | 表单项 label 后缀                                            | string       | —             | —      |
 | flexWrap        | 宽度超出是否换行                                             | boolean      | —             | false  |
+| commonFormProps        | 应用到每个表单的props                                             | object      | —             |  — |
 | selectOptionMap | el-select 的 options 配置 通过formItem 传入相应 key 取值，通常是当 select 的值是异步获取时使用， | object       | —             | —      |
 
 ##### Search-form Item Attributes

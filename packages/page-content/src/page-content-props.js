@@ -150,6 +150,11 @@ export const pageContentProps = {
   beforeEditFormatter: {
     type: Function,
     default: null
+  },
+  // 保存前格式化 row 数据 参数 formData 返回值作为请求数据
+  beforeSaveHelper: {
+    type: Function,
+    default: null
   }
 }
 

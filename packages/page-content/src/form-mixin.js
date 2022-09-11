@@ -59,7 +59,7 @@ export default {
         return this.$emit("on-form-validate-error", error)
       }
 
-      // 如果表单保存前处理方法，返回值作为后端请求数据，可以算是保存前最后的数据格式化
+      // 如果表单保存前处理方法，返回值作为请求数据，可以算是保存前最后的数据格式化
       if (this.beforeSaveHelper && !isFunction(this.beforeSaveHelper)) {
         try {
           const res = await this.beforeSaveHelper(this.formData)
