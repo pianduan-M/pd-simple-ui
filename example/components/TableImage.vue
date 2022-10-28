@@ -1,5 +1,5 @@
 <template>
-  <el-popover trigger="hover">
+  <el-popover trigger="hover" placement="bottom-start">
     <template #reference>
       <img :src="row[prop]" alt="" class="preview-image" />
     </template>

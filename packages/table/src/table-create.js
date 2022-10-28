@@ -29,9 +29,7 @@ export function createTableColumn(h, columns, commonColumnOptions) {
         if (!children) {
           throw new Error(`event on-before-create-children  result children null`)
         }
-
         const recursionChildren = createTableColumn.call(this, h, children, commonColumnOptions)
-
         return h("el-table-column", {
           props: { ...commonColumnOptions, ...props },
           on, class: className, style,

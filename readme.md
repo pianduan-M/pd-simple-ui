@@ -72,16 +72,17 @@
 | ----------- | ------------------------------------------------------------ | --------------- | --------------------- | ------ |
 | prop        | 同 el-form-item                                              | string          | —                     | —      |
 | label       | 同 el-form-item                                              | string          | —                     | —      |
-| type        | el-form-item 下的表单元素名                                  | string          | el-input el-select 等 | —      |
+| component        | el-form-item 下的表单元素名                                  | string          | el-input el-select 等 | —      |
 | options     | el-select 的 options 配置，当是 string 类型时，回到 selectOptionMap 中取值 | array string    | —                     | —      |
 | renderLabel | el-form-item 中 label 值，如果该值是 string 时，将作为插槽名 | function string | —                     | —      |
-| isHidden    | 是否隐藏该项                                                 | boolean         | —                     | —      |
+| isHidden    | 是否隐藏该项 布尔值或者函数返回布尔值 函数会传参当前绑定的formData | boolean   function | —                     | —      |
 | layout      | 该项的 el-col props                                          | object          | —                     | —      |
 | style       | el-form-item 样式                                            | object          | —                     | —      |
 | class       | el-form-item 类名                                            | object arrary   | —                     | —      |
-| slotName    | el-form-item 下表单元素的插槽名                              | string          | —                     | —      |
-| inputAttrs  | el-form-item 下表单元素的配置项  { props, on, class, style } | object          | —                     | —      |
+| slot    | el-form-item 下表单元素的插槽名                              | string          | —                     | —      |
+| inputAttrs  | el-form-item 下表单元素的配置项  { props, on, class, style,asyncProps } asyncProps 表单内组件的异步 props 传递一个数组 key 或者字符串在 selectOptionMap 中获取异步数据 | object          | —                     | —      |
 | placeholder | el-form-item 下表单元素的 placeholder                        | string          | —                     | —      |
+| contentDesc | 表单内组件描述文字 string 类型优先匹配插槽 |  |  |  |
 
 其余项将会传递给 form-item 的 props
 
@@ -121,7 +122,7 @@
 | label         | 表单 label                                                   | string       | —            | —      |
 | labelSlotName | 表单 label 插槽名                                            | string       | —            | —      |
 | prop          | 表单域字段                                                   | string       | —            | —      |
-| type          | 表单项下的表单元素类型,element-ui 元素，也可以是全局注册过的组件名或者直接传递一个vue组件 | string       | input,select | —      |
+| component          | 表单项下的表单元素类型,element-ui 元素，也可以是全局注册过的组件名或者直接传递一个vue组件 | string       | input,select | —      |
 | options       | el-select 的 options 配置，当是 string 类型时，回到 selectOptionMap 中取值 | array string | —            | —      |
 | on            | 表单项下的表单元素事件监听                                   | object       | —            | —      |
 | class         | 表单元素类名                                                 | object array | —            | —      |
@@ -133,8 +134,8 @@
 
 ##### Search-form slot 插槽
 
-| name   | 说明           |
-| ------ | -------------- |
-| before | form-item 前置 |
-| after  | form-item 后置 |
+| name   | 说明                                                                                                            |
+| ------ | ----------------------------------------------------------------------------------------------------------------|
+| before | form-item 前置                                                                                                  |
+| after  | form-item 后置                                                                                                  |
 
