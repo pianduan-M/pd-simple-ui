@@ -26,7 +26,7 @@
             v-bind="getItemProps(item)"
             :class="[inputClass, item.class]"
             :value="value[item.prop]"
-            v-if="item.type === 'select'"
+            v-if="item.component === 'select'"
             v-on="createFormItemEvents(item.on)"
             @change="onInput(item.prop, $event, 'change', item)"
             style="width: 100%"
@@ -44,26 +44,25 @@
             v-bind="getItemProps(item)"
             :class="[inputClass, item.class]"
             :value="value[item.prop]"
-            v-else-if="item.type === 'input'"
+            v-else-if="item.component === 'input'"
             v-on="createFormItemEvents(item.on)"
             @input="onInput(item.prop, $event, 'input', item)"
             style="width: 100%"
           >
           </el-input>
           <el-date-picker
-            v-else-if="isDateType(item.type)"
+            v-else-if="isDateType(item.component)"
             v-bind="getItemProps(item)"
             :size="size"
             :value="value[item.prop]"
-            :type="item.type"
             :class="[inputClass, item.class]"
             v-on="createFormItemEvents(item.on)"
             @input="onInput(item.prop, $event, 'change', item)"
             style="width: 100%"
           ></el-date-picker>
           <component
-            v-else-if="item.type"
-            :is="item.type"
+            v-else-if="item.component"
+            :is="item.component"
             v-bind="getItemProps(item)"
             v-model="value[item.prop]"
             :class="[inputClass, item.class]"
@@ -83,85 +82,85 @@
 </template>
 
 <script>
-import { isString, isArray, isObject } from "../../../src/utils/is";
-import defaultProps, { dateTypes } from "./default-props";
+import { isString, isArray, isObject } from '@/utils/is'
+import defaultProps, { dateTypes } from './default-props'
 
 export default {
-  name: "PdSearchForm",
+  name: 'PdSearchForm',
   props: {
     value: {
       type: Object,
       default() {
-        return {};
-      },
+        return {}
+      }
     },
     // form items
     formItems: {
       type: Array,
       default() {
-        return [];
-      },
+        return []
+      }
     },
     gutter: {
       type: Number,
-      default: 0,
+      default: 0
     },
     size: {
       type: String,
-      default: "small",
+      default: 'small'
     },
     inputClass: {
       type: String,
-      default: "",
+      default: ''
     },
     labelSuffix: {
       type: String,
-      default: "",
+      default: ''
     },
     flexWrap: {
       type: Boolean,
-      default: false,
+      default: false
     },
     selectOptionMap: {
       type: Object,
       default() {
-        return {};
-      },
+        return {}
+      }
     },
     commonFormProps: {
       type: Object,
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
   components: {},
   methods: {
     onInput(prop, value, eventName, formItem) {
-      const searchValue = { ...this.value };
-      searchValue[prop] = value;
+      const searchValue = { ...this.value }
+      searchValue[prop] = value
       if (formItem.on && formItem.on[eventName]) {
-        formItem.on[eventName](value, prop);
+        formItem.on[eventName](value, prop)
       }
-      this.$emit("input", searchValue);
+      this.$emit('input', searchValue)
     },
     getSelectOptions(column) {
-      let options = [];
+      let options = []
       if (isArray(column.options)) {
-        options = column.options;
+        options = column.options
       } else if (isString) {
-        options = this.selectOptionMap[column.options] || [];
+        options = this.selectOptionMap[column.options] || []
       }
-      return options;
+      return options
     },
     createFormItemEvents(events) {
       if (events && isObject(events)) {
-        return events;
+        return events
       }
-      return {};
+      return {}
     },
     getItemProps(item = {}) {
-      let result = {};
+      let result = {}
       const {
-        type,
+        component,
         label,
         prop,
         class: className,
@@ -169,55 +168,55 @@ export default {
         slotName,
         labelSlotName,
         ...rest
-      } = item;
+      } = item
       switch (true) {
-        case this.isDateType(type):
+        case component === 'date':
           result = {
             ...this.commonFormProps,
             ...this.defaultProps.date,
-            ...rest,
-          };
-          break;
+            ...rest
+          }
+          break
 
         default:
-          result = { ...this.commonFormProps, ...rest };
-          break;
+          result = { ...this.commonFormProps, ...rest }
+          break
       }
-      return result;
+      return result
     },
     isDateType(type) {
-      return dateTypes.includes(type);
-    },
+      return dateTypes.includes(type)
+    }
   },
   created() {
-    this.defaultProps = defaultProps;
+    this.defaultProps = defaultProps
   },
   computed: {
     formStyle() {
       if (this.gutter > 0) {
-        const gutter = Math.floor(window.parseFloat(this.gutter) / 2);
+        const gutter = Math.floor(window.parseFloat(this.gutter) / 2)
 
         return {
-          marginLeft: -gutter + "px",
-          marginRight: -gutter + "px",
-        };
+          marginLeft: -gutter + 'px',
+          marginRight: -gutter + 'px'
+        }
       }
     },
     formItemStyle() {
       if (this.gutter > 0) {
-        const gutter = Math.floor(window.parseFloat(this.gutter) / 2);
+        const gutter = Math.floor(window.parseFloat(this.gutter) / 2)
 
         return {
-          paddingLeft: gutter + "px",
-          paddingRight: gutter + "px",
-        };
+          paddingLeft: gutter + 'px',
+          paddingRight: gutter + 'px'
+        }
       }
     },
     formItemClass() {
-      return [];
-    },
-  },
-};
+      return []
+    }
+  }
+}
 </script>
 
 <style lang="scss">
